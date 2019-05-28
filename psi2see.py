@@ -6,24 +6,26 @@ from modularAnalysis import *
 
 # input mdst file
 inputMdst('default',
-	'/home/thczank/b0psi2sks/gsim/psi2see/b0_psi2s_gsim_psiee_0.root'
+	    '/home/thczank/b0psi2sks/gsim/psi2see/b0_psi2s_gsim_psi2see_all.root'
 	)
 
 # create a ROOT file
-ntupleFile('psi2see_ana.root');
+ntupleFile('psi2see_ana_all.root');
 
 ################################################################################
 fillParticleList('K+:all',  '')
 fillParticleList('mu+:all', '')
 fillParticleList('pi+:all', '')
 fillParticleList('e+:all', '')
+fillParticleList('gamma:all', '')
 
 ################################################################################
 
 ########## MC TRUTH MATCHING ###############################################
 from modularAnalysis import matchMCTruth
-cutAndCopyList("e+:gen", "e+:all", "charge>0")
-cutAndCopyList("e-:gen", "e+:all", "charge<0")
+correctFSR("e+:cor","e+:all","gamma:all",angleThreshold=2.8647889756541)
+cutAndCopyList("e+:gen", "e+:cor", "charge>0")
+cutAndCopyList("e-:gen", "e+:cor", "charge<0")
 reconstructDecay("psi(2S):gen -> e+:gen e-:gen","")
 matchMCTruth("psi(2S):gen")
 
@@ -45,11 +47,12 @@ ks0pipi_rec += ["InvMass", "^K_S0"]
 ks0pipi_rec += ["MCTruth", "^K_S0"]
 ntupleTree("K_S0_from_recpipi", "K_S0:rec",ks0pipi_rec)
 
-cutAndCopyList("K_S0:rectru", "K_S0:rec", "mcPDG == 310")
-cutAndCopyList("psi(2S):rectru", "psi(2S):gen", "mcPDG == 100443")
+cutAndCopyList("K_S0:rectru", "K_S0:rec", "mcErrors == 0")
+cutAndCopyList("psi(2S):rectru", "psi(2S):gen", "mcErrors == 0")
 reconstructDecay("B0:recgen -> psi(2S):rectru K_S0:rectru","")
 #reconstructDecay("B0:recgen -> psi(2S):gen K_S0:rec", "")
 matchMCTruth("B0:recgen")
+variablesToNtuple("B0:recgen",["Mbc","deltaE","mcPDG",'distance', 'significanceOfDistance', 'dx', 'dy', 'dz', 'x', 'y', 'z', 'x_uncertainty', 'y_uncertainty', 'z_uncertainty', 'dr', 'dphi', 'dcosTheta', 'prodVertexX', 'prodVertexY', 'prodVertexZ', 'prodVertexXErr', 'prodVertexYErr', 'prodVertexZErr', 'chiProb'] ,"B0_Mbc","psi2See_b0mbc.root")
 recgen_b0_all  = ['EventMetaData', '^B0'             ]
 recgen_b0_all += ['Kinematics',    '^B0 -> ^psi(2S) ^K_S0']
 recgen_b0_all += ['PID',           'B0 -> ^psi(2S) ^K_S0' ]
@@ -60,6 +63,7 @@ ntupleTree("B0_rec_gen", "B0:recgen", recgen_b0_all)
 
 ############################################################################
 
+vertexRave("B0:recgen",-1)
 
 # process the events
 process(analysis_main)
