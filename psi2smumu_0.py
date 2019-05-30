@@ -54,8 +54,14 @@ cutAndCopyList("psi(2S):rectru", "psi(2S):gen", "mcErrors == 0")
 
 reconstructDecay("B0:recgen -> psi(2S):rectru K_S0:rectru","")
 matchMCTruth("B0:recgen")
-vertexRaveDaughtersUpdate("B0:recgen",-1,"B0 -> [psi(2S) -> ^mu+ ^mu-] K_S0")
-variablesToNtuple("B0:recgen",["Mbc","deltaE","mcPDG",'distance', 'significanceOfDistance', 'dx', 'dy', 'dz', 'x', 'y', 'z', 'x_uncertainty', 'y_uncertainty', 'z_uncertainty', 'dr', 'dphi', 'dcosTheta', 'prodVertexX', 'prodVertexY', 'prodVertexZ', 'prodVertexXErr', 'prodVertexYErr', 'prodVertexZErr', 'chiProb'] ,"B0_Mbc","psi2Smumu_b0mbc.root")
+buildRestOfEvent("B0:recgen")
+
+tagV("B0:recgen", "breco", 0.001, "standard_PXD")
+
+#vertexRaveDaughtersUpdate("B0:recgen",-1,"B0 -> [psi(2S) -> ^mu+ ^mu-] K_S0")
+vertexRave("B0:recgen",-1, "B0:recgen -> [psi(2S):rectru -> ^mu+ ^mu- ]", "ipprofile")
+
+variablesToNtuple("B0:recgen",["Mbc","deltaE","mcPDG",'distance', 'significanceOfDistance', 'dx', 'dy', 'dz', 'x', 'y', 'z', 'x_uncertainty', 'y_uncertainty', 'z_uncertainty', 'dr', 'dphi', 'dcosTheta', 'prodVertexX', 'prodVertexY', 'prodVertexZ', 'prodVertexXErr', 'prodVertexYErr', 'prodVertexZErr', 'chiProb', "mcDX", "mcDY", "mcDZ", "pValue",'MCDeltaT', 'TagVmcLBoost', 'TagVmcOBoost', 'mcLBoost', 'mcOBoost', 'mcTagVx', 'mcTagVy', 'mcTagVz','DeltaT', 'DeltaTErr', 'DeltaZ', 'DeltaZErr', 'DeltaBoost', 'DeltaBoostErr', 'TagVLBoost', 'TagVLBoostErr', 'TagVOBoost', 'TagVOBoostErr', 'TagVpVal', 'TagVx', 'TagVxErr', 'TagVy', 'TagVyErr', 'TagVz', 'TagVzErr'] ,"B0_Mbc","psi2Smumu_b0mbc.root")
 recgen_b0_all  = ['EventMetaData', '^B0'             ]
 recgen_b0_all += ['Kinematics',    '^B0 -> ^psi(2S) ^K_S0']
 recgen_b0_all += ['PID',           'B0 -> ^psi(2S) ^K_S0' ]
