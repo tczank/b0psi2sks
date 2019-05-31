@@ -126,16 +126,16 @@ ntupleTree('tree_bc_jpsimumu_kc',  'B+:jpsimumu_kc',  tools_bc_mumu)
 
 
 ################################################################################
-# process the events    
-dt_vars = ['DeltaT','MCDeltaT','MCTagBFlavor','DeltaTErr','DeltaZ','LBoost','LBoostErr','DeltaBoost','OBoost','OBoostErr'] 
+# process the events
+dt_vars = ['DeltaT','MCDeltaT','MCTagBFlavor','DeltaTErr','DeltaZ','LBoost','LBoostErr','DeltaBoost','OBoost','OBoostErr']
 
 Bc_vars = vc.reco_stats + \
 	vc.deltae_mbc + \
 	vc.mc_truth + \
 	dt_vars + vc.flavor_tagging
 
-variablesToNtuple('B+:jpsimumu_kc', 
-	variables=Bc_vars, 
+variablesToNtuple('B+:jpsimumu_kc',
+	variables=Bc_vars,
 	filename='/tmp/kani/AAA_kani.root',
 	treename='Bc_JpsiKc')
 
