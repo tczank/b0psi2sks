@@ -10,7 +10,7 @@ inputMdst('default',
 	)
 
 # create a ROOT file
-ntupleFile('psi2smumu_ana_all.root');
+ntupleFile('psi2smumu_ana_all_iptube.root');
 
 ################################################################################
 fillParticleList('K+:all',  '')
@@ -59,9 +59,9 @@ buildRestOfEvent("B0:recgen")
 TagV("B0:recgen", "breco", 0.001, "standard_PXD")
 
 #vertexRaveDaughtersUpdate("B0:recgen",-1,"B0 -> [psi(2S) -> ^mu+ ^mu-] K_S0")
-vertexRave("B0:recgen",-1, "B0:recgen -> [psi(2S):rectru -> ^mu+ ^mu- ]", "")
+vertexRave("B0:recgen",-1, "B0:recgen -> [psi(2S):rectru -> ^mu+ ^mu- ]", "iptube")
 
-variablesToNtuple("B0:recgen",["Mbc","deltaE","mcPDG",'distance', 'significanceOfDistance', 'dx', 'dy', 'dz', 'x', 'y', 'z', 'x_uncertainty', 'y_uncertainty', 'z_uncertainty', 'dr', 'dphi', 'dcosTheta', 'prodVertexX', 'prodVertexY', 'prodVertexZ', 'prodVertexXErr', 'prodVertexYErr', 'prodVertexZErr', 'chiProb', "mcDX", "mcDY", "mcDZ", "pValue",'MCDeltaT', 'TagVmcLBoost', 'TagVmcOBoost', 'mcLBoost', 'mcOBoost', 'mcTagVx', 'mcTagVy', 'mcTagVz','DeltaT', 'DeltaTErr', 'DeltaZ','DeltaBoost','TagVLBoost', 'TagVLBoostErr', 'TagVOBoost', 'TagVOBoostErr', 'TagVpVal', 'TagVx', 'TagVxErr', 'TagVy', 'TagVyErr', 'TagVz', 'TagVzErr',"nTracks"] ,"B0_Mbc","psi2Smumu_b0mbc.root")
+variablesToNtuple("B0:recgen",["Mbc","deltaE","mcPDG",'distance', 'significanceOfDistance', 'dx', 'dy', 'dz', 'x', 'y', 'z', 'x_uncertainty', 'y_uncertainty', 'z_uncertainty', 'dr', 'dphi', 'dcosTheta', 'prodVertexX', 'prodVertexY', 'prodVertexZ', 'prodVertexXErr', 'prodVertexYErr', 'prodVertexZErr', 'chiProb', "mcDX", "mcDY", "mcDZ", "pValue",'MCDeltaT', 'TagVmcLBoost', 'TagVmcOBoost', 'mcLBoost', 'mcOBoost', 'mcTagVx', 'mcTagVy', 'mcTagVz','DeltaT', 'DeltaTErr', 'DeltaZ','DeltaBoost','TagVLBoost', 'TagVLBoostErr', 'TagVOBoost', 'TagVOBoostErr', 'TagVpVal', 'TagVx', 'TagVxErr', 'TagVy', 'TagVyErr', 'TagVz', 'TagVzErr',"nTracks"] ,"B0_Mbc","psi2Smumu_b0mbc_iptube.root")
 recgen_b0_all  = ['EventMetaData', '^B0'             ]
 recgen_b0_all += ['Kinematics',    '^B0 -> ^psi(2S) ^K_S0']
 recgen_b0_all += ['PID',           'B0 -> ^psi(2S) ^K_S0' ]
