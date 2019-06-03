@@ -52,7 +52,7 @@ ma.cutAndCopyList("pi+:psi", "pi+:rec", "genMotherPDG == 100443 and mcErrors == 
 ma.cutAndCopyList("pi-:psi", "pi-:rec", "genMotherPDG == 100443 and mcErrors == 0",path=mypath)
 ma.cutAndCopyList("J/psi:tru", "J/psi:gen", "mcErrors == 0", path=mypath)
 ma.reconstructDecay("psi(2S):gen -> J/psi:tru pi+:psi pi-:psi","",path=mypath)
-ma.matchMCTruth("psi(2S):gen")
+ma.matchMCTruth("psi(2S):gen",path=mypath)
 
 ma.cutAndCopyList("K_S0:rectru", "K_S0:rec", "mcErrors == 0",path=mypath)
 #ma.cutAndCopyList("psi(2S):rectru", "psi(2S):gen", "mcErrors == 0",path=mypath)
