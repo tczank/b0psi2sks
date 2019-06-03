@@ -32,7 +32,6 @@ ma.fillParticleList('e+:all', '',path=mypath)
 ################################################################################
 
 ########## MC TRUTH MATCHING ###############################################
-
 ma.cutAndCopyList("mu+:gen", "mu+:all", "charge>0",path=mypath)
 ma.cutAndCopyList("mu-:gen", "mu+:all", "charge<0",path=mypath)
 ma.reconstructDecay(decayString="psi(2S):gen -> mu+:gen mu-:gen",
@@ -40,8 +39,9 @@ ma.reconstructDecay(decayString="psi(2S):gen -> mu+:gen mu-:gen",
                     path=mypath)
 ma.matchMCTruth(list_name="psi(2S):gen",path=mypath)
 
-psi2s_vars = vc.mc_truth + vc.kinematics + vc.inv_mass + vc.mc_variables
+chiProb=["chiProb"]
 
+psi2s_vars = vc.mc_truth + vc.kinematics + vc.inv_mass + vc.mc_variables + chiProb
 
 ma.cutAndCopyList("pi+:rec", "pi+:all", "charge>0",path=mypath)
 ma.cutAndCopyList("pi-:rec", "pi+:all", "charge<0",path=mypath)
@@ -55,7 +55,7 @@ ma.reconstructDecay("B0:recgen -> psi(2S):rectru K_S0:rectru","",path=mypath)
 ma.matchMCTruth("B0:recgen",path=mypath)
 ma.buildRestOfEvent("B0:recgen",path=mypath)
 
-b0_vars = vc.mc_truth + vc.kinematics + vc.deltae_mbc + vc.mc_variables + vc.mc_vertex + vc.mc_tag_vertex + vc.track + vc.vertex
+b0_vars = vc.mc_truth + vc.kinematics + vc.deltae_mbc + vc.mc_variables + vc.mc_vertex + vc.mc_tag_vertex + vc.track + vc.vertex + chiProb
 
 ######################################################################################
 
@@ -63,13 +63,12 @@ b0_vars = vc.mc_truth + vc.kinematics + vc.deltae_mbc + vc.mc_variables + vc.mc_
 
 ma.TagV("B0:recgen", "breco", 0.001, "standard_PXD",path=mypath)
 
-ma.vertexRave("B0:recgen",-1, "B0:recgen -> [psi(2S):rectru -> ^mu+ ^mu- ]", "",path=mypath)
+ma.vertexRave("B0:recgen",-1, "B0:recgen -> [psi(2S):rectru -> ^mu+ ^mu- ]", "ipprofile",path=mypath)
 
 #############################################################################
 
 ########################### Saving variables to ntuple ##############################
-
-rootOutputFile = "B0psi2Smumu_recon.root"
+rootOutputFile = "B0psi2Smumu_recon_ipprofile.root"
 
 ma.variablesToNtuple(decayString="psi(2S):gen",
                   variables=psi2s_vars,
@@ -88,10 +87,7 @@ ma.variablesToNtuple(decayString="B0:recgen",
                   treename="B0_recgen",
                   filename=rootOutputFile,
                   path=mypath)
-
-
 ############################################################################
-
 
 # process the events
 b2.process(mypath)
