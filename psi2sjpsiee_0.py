@@ -60,23 +60,26 @@ ma.cutAndCopyList("K_S0:rectru", "K_S0:rec", "mcErrors == 0",path=mypath)
 #ma.cutAndCopyList("psi(2S):rectru", "psi(2S):gen", "mcErrors == 0",path=mypath)
 
 ma.reconstructDecay("B0:recgen -> psi(2S):gen K_S0:rectru","",path=mypath)
-ma.matchMCTruth("B0:recgen",path=mypath)
-ma.buildRestOfEvent("B0:recgen",path=mypath)
 
-b0_vars = vc.mc_truth + vc.kinematics + vc.deltae_mbc + vc.mc_variables + vc.mc_vertex + vc.mc_tag_vertex + vc.track + vc.vertex + chiProb
+b0_vars = vc.mc_truth + vc.kinematics + vc.deltae_mbc + vc.mc_variables + vc.mc_vertex + vc.mc_tag_vertex + vc.tag_vertex + vc.track + vc.vertex + chiProb
 
 ######################################################################################
 
 ##################### RAVE FITTING ############################################
 
+
+ma.vertexRave("B0:recgen",-1, "B0:recgen -> [psi(2S):gen -> [J/psi:tru -> ^e+ ^e-] ^pi+ ^pi-  ]", "iptube",path=mypath)
+
+ma.matchMCTruth("B0:recgen",path=mypath)
+ma.buildRestOfEvent("B0:recgen",path=mypath)
 ma.TagV("B0:recgen", "breco", 0.001, "standard_PXD",path=mypath)
 
-ma.vertexRave("B0:recgen",-1, "B0:recgen -> [psi(2S):gen -> ^J/psi ^pi+ ^pi-  ]", "ipprofile",path=mypath)
+
 
 #############################################################################
 
 ########################### Saving variables to ntuple ##############################
-rootOutputFile = "B0psi2Sjpsiee_recon_ipprofile.root"
+rootOutputFile = "B0psi2Sjpsiee_recon_iptube.root"
 
 ma.variablesToNtuple(decayString="psi(2S):gen",
                   variables=psi2s_vars,
