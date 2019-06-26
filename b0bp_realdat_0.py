@@ -54,10 +54,10 @@ ma.correctFSR("e+:cor","e+:all","gamma:all",angleThreshold=2.8647889756541,path=
 ma.cutAndCopyList("e+:gen", "e+:cor", "charge>0",path=mypath)
 ma.cutAndCopyList("e-:gen", "e+:cor", "charge<0",path=mypath)
 ma.reconstructDecay(decayString="psi(2S):den -> e+:gen e-:gen",
-                    cut="",
+                    cut="genMotherPDG == 100443",
                     path=mypath)
 ma.reconstructDecay(decayString="J/psi:den -> e+:gen e-:gen",
-                    cut="",
+                    cut=" genMotherPDG == 443",
                     path=mypath)
 #ma.matchMCTruth(list_name="psi(2S):den",path=mypath)
 #ma.matchMCTruth(list_name="J/psi:den",path=mypath)
@@ -95,12 +95,12 @@ ma.cutAndCopyList("K+:pos","K+:all", "charge > 0", path=mypath)
 ma.reconstructDecay("B0:recgen -> psi(2S):rectru K_S0:rectru","",path=mypath)
 ma.reconstructDecay("B0:recden -> psi(2S):recden K_S0:rectru","",path=mypath)
 ma.reconstructDecay("B0:recjpsi -> psi(2S):recjpsi K_S0:rectru","",path=mypath)
-ma.reconstructDecay("B0:recjpsiden -> psi(2S):recjpsi K_S0:rectru","",path=mypath)
+ma.reconstructDecay("B0:recjpsiden -> psi(2S):recjpsiden K_S0:rectru","",path=mypath)
 
 ma.reconstructDecay("B+:recgen -> psi(2S):rectru K+:pos","",path=mypath)
 ma.reconstructDecay("B+:recden -> psi(2S):recden K+:pos","",path=mypath)
 ma.reconstructDecay("B+:recjpsi -> psi(2S):recjpsi K+:pos","",path=mypath)
-ma.reconstructDecay("B+:recjpsiden -> psi(2S):recjpsi K+:pos","",path=mypath)
+ma.reconstructDecay("B+:recjpsiden -> psi(2S):recjpsiden K+:pos","",path=mypath)
 
 b0_vars = vc.mc_truth + vc.kinematics + vc.deltae_mbc + vc.mc_variables + vc.mc_vertex + vc.mc_tag_vertex + vc.tag_vertex + vc.track + vc.vertex + chiProb + EoP + piid
 
