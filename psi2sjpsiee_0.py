@@ -34,8 +34,8 @@ ma.fillParticleList('gamma:all', '',path=mypath)
 
 ########## MC TRUTH MATCHING ###############################################
 ma.correctFSR("e+:cor","e+:all","gamma:all",angleThreshold=2.8647889756541,path=mypath) #from 2012 Belle 1 paper
-ma.cutAndCopyList("e+:gen", "e+:all", "charge>0",path=mypath)
-ma.cutAndCopyList("e-:gen", "e+:all", "charge<0",path=mypath)
+ma.cutAndCopyList("e+:gen", "e+:cor", "charge>0",path=mypath)
+ma.cutAndCopyList("e-:gen", "e+:cor", "charge<0",path=mypath)
 ma.reconstructDecay(decayString="J/psi:gen -> e+:gen e-:gen",
                     cut="",
                     path=mypath)
