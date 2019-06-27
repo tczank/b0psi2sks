@@ -24,7 +24,8 @@ print(mypath)
   #               path = mypath)
 
 ### FIRST TEST FOR THE REAL DATA CDST
-ma.inputMdstList(environmentType='MC9',
+ba.use_central_database("data_reprocessing_prompt_bucket4b")
+ma.inputMdstList(environmentType='default',
                  filelist=[
 '/ghi/fs01/belle2/bdata/Data/e0007/4S/Bucket4/release-03-01-01/DB00000598/r00909/skim/hlt_hadron/cdst/sub00/cdst.physics.hlt_hadron.0007.00909.root',
 '/ghi/fs01/belle2/bdata/Data/e0007/4S/Bucket4/release-03-01-01/DB00000598/r00911/skim/hlt_hadron/cdst/sub00/cdst.physics.hlt_hadron.0007.00911.root',
