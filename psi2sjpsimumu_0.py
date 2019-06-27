@@ -40,8 +40,11 @@ ma.reconstructDecay(decayString="J/psi:gen -> mu+:gen mu-:gen",
 ma.matchMCTruth(list_name="J/psi:gen",path=mypath)
 
 chiProb=["chiProb"]
+EoP=['clusterEoP']
+piid=['pionID']
 
-psi2s_vars = vc.mc_truth + vc.kinematics + vc.inv_mass + vc.mc_variables + chiProb
+
+psi2s_vars = vc.mc_truth + vc.kinematics + vc.inv_mass + vc.mc_variables + chiProb + EoP + piid
 
 ma.cutAndCopyList("pi+:rec", "pi+:all", "charge>0",path=mypath)
 ma.cutAndCopyList("pi-:rec", "pi+:all", "charge<0",path=mypath)
@@ -59,13 +62,13 @@ ma.cutAndCopyList("K_S0:rectru", "K_S0:rec", "mcErrors == 0",path=mypath)
 
 ma.reconstructDecay("B0:recgen -> psi(2S):gen K_S0:rectru","",path=mypath)
 
-b0_vars = vc.mc_truth + vc.kinematics + vc.deltae_mbc + vc.mc_variables + vc.mc_vertex + vc.mc_tag_vertex + vc.tag_vertex + vc.track + vc.vertex + chiProb
+b0_vars = vc.mc_truth + vc.kinematics + vc.deltae_mbc + vc.mc_variables + vc.mc_vertex + vc.mc_tag_vertex + vc.tag_vertex + vc.track + vc.vertex + chiProb + EoP + piid
 
 ######################################################################################
 
 ##################### RAVE FITTING ############################################
 
-ma.vertexRave("B0:recgen",-1, "B0:recgen -> [psi(2S):gen -> [J/psi:tru -> ^mu+ ^mu-] ^pi+ ^pi-  ]", "iptube",path=mypath)
+ma.vertexRave("B0:recgen",-1, "B0:recgen -> [psi(2S):gen -> [J/psi:tru -> ^mu+ ^mu-] ^pi+ ^pi-  ]", "ipprofile",path=mypath)
 
 #ma.vertexRave("B0:recgen",-1, "B0:recgen -> ^psi(2S) ^K_S0 ", "ipprofile",path=mypath) not working for any specified decay apparently
 
@@ -77,7 +80,7 @@ ma.TagV("B0:recgen", "breco", 0.001, "standard_PXD",path=mypath)
 #############################################################################
 
 ########################### Saving variables to ntuple ##############################
-rootOutputFile = "B0psi2Sjpsimumu_recon_iptube.root"
+rootOutputFile = "B0psi2Sjpsimumu_recon_realdattest.root"
 
 ma.variablesToNtuple(decayString="psi(2S):gen",
                   variables=psi2s_vars,
@@ -85,7 +88,7 @@ ma.variablesToNtuple(decayString="psi(2S):gen",
                   filename=rootOutputFile,
                   path=mypath)
 
-ma.variablesToNtuple(decayString="J/psi:gen",
+ma.variablesToNtuple(decayString="J/psi:tru",
                   variables=psi2s_vars,
                   treename="psi2Sjpsi_jpsi",
                   filename=rootOutputFile,

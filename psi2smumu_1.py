@@ -40,8 +40,12 @@ ma.reconstructDecay(decayString="psi(2S):gen -> mu+:gen mu-:gen",
 ma.matchMCTruth(list_name="psi(2S):gen",path=mypath)
 
 chiProb=["chiProb"]
+EoP=['clusterEoP']
+piid=['pionID']
 
-psi2s_vars = vc.mc_truth + vc.kinematics + vc.inv_mass + vc.mc_variables + chiProb
+
+
+psi2s_vars = vc.mc_truth + vc.kinematics + vc.inv_mass + vc.mc_variables + chiProb + EoP + piid
 
 ma.cutAndCopyList("pi+:rec", "pi+:all", "charge>0",path=mypath)
 ma.cutAndCopyList("pi-:rec", "pi+:all", "charge<0",path=mypath)
@@ -53,14 +57,14 @@ ma.cutAndCopyList("psi(2S):rectru", "psi(2S):gen", "mcErrors == 0",path=mypath)
 
 ma.reconstructDecay("B0:recgen -> psi(2S):rectru K_S0:rectru","",path=mypath)
 
-b0_vars = vc.mc_truth + vc.kinematics + vc.deltae_mbc + vc.mc_variables + vc.mc_vertex + vc.mc_tag_vertex + vc.tag_vertex + vc.track + vc.vertex + chiProb
+b0_vars = vc.mc_truth + vc.kinematics + vc.deltae_mbc + vc.mc_variables + vc.mc_vertex + vc.mc_tag_vertex + vc.tag_vertex + vc.track + vc.vertex + chiProb + EoP + piid
 
 ######################################################################################
 
 ##################### RAVE FITTING ############################################
 
 
-ma.vertexRave("B0:recgen",-1, "B0:recgen -> [psi(2S):rectru -> ^mu+ ^mu- ]", "iptube",path=mypath)
+ma.vertexRave("B0:recgen",-1, "B0:recgen -> [psi(2S):rectru -> ^mu+ ^mu- ]", "ipprofile",path=mypath)
 
 #ma.vertexRave("B0:recgen",0.0,path=mypath) suggested at the release example
 
@@ -73,7 +77,7 @@ ma.TagV("B0:recgen", "breco", 0.001, "standard_PXD",path=mypath)
 #############################################################################
 
 ########################### Saving variables to ntuple ##############################
-rootOutputFile = "B0psi2Smumu_recon_iptube.root"
+rootOutputFile = "B0psi2Smumu_recon_realdat_test.root"
 
 ma.variablesToNtuple(decayString="psi(2S):gen",
                   variables=psi2s_vars,
