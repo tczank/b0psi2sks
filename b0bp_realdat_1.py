@@ -2,21 +2,20 @@
 # -*- coding: utf-8 -*-
 
 ## to be deprecated in release 04 ####
-#from basf2 import *
-#from modularAnalysis import *
+from basf2 import *
+from modularAnalysis import *
 ##########################
 
 ## new preamble for release 04 ###
-import basf2 as b2
-import modularAnalysis as ma
-import variables.collections as vc
-import variables.utils as vu
-import variables as v
-mypath = b2.Path()
+#import basf2 as b2
+#import modularAnalysis as ma
+#import variables.collections as vc
+#import variables.utils as vu
+#mypath = b2.Path()
 
-ma.inputMdst(environmentType='default',
-           filename=b2.find_file('/home/thczank/b0psi2sks/gsim/psi2smumu/b0_psi2s_gsim_psi2smumu_all.root'),
-           path=mypath)
+inputMdst(environmentType='default',
+           filename=find_file('/home/thczank/b0psi2sks/gsim/psi2smumu/b0_psi2s_gsim_psi2smumu_all.root'),
+           )
 
 #ma.inputMdstList(environmentType='default',
  #                filelist=['/home/thczank/b0psi2sks/gsim/psi2smumu/b0_psi2s_gsim_psimumu_0.root','/home/thczank/b0psi2sks/gsim/psi2smumu/b0_psi2s_gsim_psimumu_1.root'],
@@ -216,240 +215,39 @@ ma.inputMdst(environmentType='default',
 
 
 # create a ROOT file
-#ntupleFile('psi2smumu_ana_all_iptube.root');
+
+ntupleFile('psitreeEoP.root');
+
 
 ################################################################################
-ma.fillParticleList('K+:all',  '',path=mypath)
-ma.fillParticleList('mu+:all', '',path=mypath)
-ma.fillParticleList('pi+:all', '',path=mypath)
-ma.fillParticleList('e+:all', '',path=mypath)
-ma.fillParticleList('gamma:all', '',path=mypath)
+fillParticleList('K+:all',  '')
+fillParticleList('mu+:all', '')
+fillParticleList('pi+:all', '')
+fillParticleList('e+:all', '')
+fillParticleList('gamma:all', '')
 ################################################################################
 
 ########## MC TRUTH MATCHING ###############################################
-ma.cutAndCopyList("mu+:gen", "mu+:all", "charge>0",path=mypath)
-ma.cutAndCopyList("mu-:gen", "mu+:all", "charge<0",path=mypath)
-ma.reconstructDecay(decayString="psi(2S):gen -> mu+:gen mu-:gen",
-                    cut="",
-                    path=mypath)
-
-v.variables.addAlias('mu_EoP','daughter(0,clusterEoP)')
-
-ma.cutAndCopyList("mu+:gen", "mu+:all", "charge>0",path=mypath)
-ma.cutAndCopyList("mu-:gen", "mu+:all", "charge<0",path=mypath)
-ma.reconstructDecay(decayString="J/psi:gen -> mu+:gen mu-:gen",
-                    cut="",
-                    path=mypath)
-#ma.matchMCTruth(list_name="J/psi:gen",path=mypath)
-
-ma.correctFSR("e+:cor","e+:all","gamma:all",angleThreshold=2.8647889756541,path=mypath) #from 2012 Belle 1 paper
-ma.cutAndCopyList("e+:gen", "e+:cor", "charge>0",path=mypath)
-ma.cutAndCopyList("e-:gen", "e+:cor", "charge<0",path=mypath)
-ma.reconstructDecay(decayString="psi(2S):den -> e+:gen e-:gen",
-                    cut="",
-                    path=mypath)
-
-v.variables.addAlias('e_EoP','daughter(0,clusterEoP)')
-
-ma.reconstructDecay(decayString="J/psi:den -> e+:gen e-:gen",
-                    cut="",
-                    path=mypath)
-#ma.matchMCTruth(list_name="psi(2S):den",path=mypath)
-#ma.matchMCTruth(list_name="J/psi:den",path=mypath)
+cutAndCopyList("mu+:gen", "mu+:all", "charge>0")
+cutAndCopyList("mu-:gen", "mu+:all", "charge<0")
+reconstructDecay(decayString="psi(2S):gen -> mu+:gen mu-:gen",
+                    cut=""
+                    )
+#matchMCTruth(list_name="psi(2S):gen",path=mypath)
 
 
-chiProb=["chiProb"]
-EoP=['clusterEoP']
-piid=['pionID']
-mueop=['mu_EoP']
-kaid=['kaonID']
+
+# dump to root (no_muid)
+tools_psi_no_muid  = ['EventMetaData', '^psi(2S)']
+tools_psi_no_muid += ['Kinematics',    '^psi(2S) -> ^mu+ ^mu-']
+tools_psi_no_muid += ['PID',           ' psi(2S) -> ^mu+ ^mu-']
+tools_psi_no_muid += ['InvMass',       '^psi(2S)'             ]
+tools_psi_no_muid += ['MCTruth',       '^psi(2S)'             ]
+tools_psi_no_muid += ['EoP',    ' psi(2S)' ]
+ntupleTree('psitree', 'psi(2S):gen', tools_psi_no_muid)
 
 
-psi2s_vars = vc.mc_truth + vc.kinematics + vc.inv_mass + vc.mc_variables + chiProb + mueop
-
-kp_vars = vc.mc_truth + vc.kinematics + vc.inv_mass + vc.mc_variables + chiProb + kaid
-
-lep_vars = EoP
-
-pion_vars = piid
-
-ma.cutAndCopyList("pi+:rec", "pi+:all", "charge>0",path=mypath)
-ma.cutAndCopyList("pi-:rec", "pi+:all", "charge<0",path=mypath)
-ma.reconstructDecay("K_S0:rec -> pi+:rec pi-:rec","",path=mypath)
-#ma.matchMCTruth("K_S0:rec",path=mypath)
-
-v.variables.addAlias('pi1_ID','daughter(0, pionID)')
-pi1id=['pi1_ID']
-k0s_vars = vc.mc_truth + vc.kinematics + vc.inv_mass + vc.mc_variables + chiProb + pi1id
-
-ma.reconstructDecay("psi(2S):jpsi -> J/psi:gen pi+:rec pi-:rec","",path=mypath)
-#ma.matchMCTruth("psi(2S):gen",path=mypath)
-
-v.variables.addAlias('mujpsieop','daughter(0,daughter(0,clusterEoP))')
-v.variables.addAlias('psi2spi','daughter(1,pionID)')
-
-mujpsieop=['mujpsieop']
-psi2spi=['psi2spi']
-
-psi2sjpsi_vars = vc.mc_truth + vc.kinematics + vc.inv_mass + vc.mc_variables + chiProb + mujpsieop + psi2spi
-
-ma.reconstructDecay("psi(2S):jpsiden -> J/psi:den pi+:rec pi-:rec","",path=mypath)
-
-ma.cutAndCopyList("K+:pos","K+:all", "charge > 0", path=mypath)
-
-ma.reconstructDecay("B0:recgen -> psi(2S):gen K_S0:rec","",path=mypath)
-ma.reconstructDecay("B0:recden -> psi(2S):den K_S0:rec","",path=mypath)
-ma.reconstructDecay("B0:recjpsi -> psi(2S):jpsi K_S0:rec","",path=mypath)
-ma.reconstructDecay("B0:recjpsiden -> psi(2S):jpsiden K_S0:rec","",path=mypath)
-
-ma.reconstructDecay("B+:recgen -> psi(2S):gen K+:pos","",path=mypath)
-ma.reconstructDecay("B+:recden -> psi(2S):den K+:pos","",path=mypath)
-ma.reconstructDecay("B+:recjpsi -> psi(2S):jpsi K+:pos","",path=mypath)
-ma.reconstructDecay("B+:recjpsiden -> psi(2S):jpsiden K+:pos","",path=mypath)
-
-v.variables.addAlias('b0psi2smu','daughter(0,daughter(0,clusterEoP))')
-v.variables.addAlias('b0psi2sjpsimu','daughter(0,daughter(0,daughter(0,clusterEoP)))')
-
-v.variables.addAlias('b0psi2sjpsipi','daughter(0,daughter(1,pionID))')
-
-v.variables.addAlias('b0k0spi','daughter(1,daughter(0,pionID))')
-v.variables.addAlias('bpka','daughter(1,kaonID)')
-
-b0psi2smu=['b0psi2smu']
-b0psi2sjpsimu=['b0psi2sjpsimu']
-b0k0spi=['b0k0spi']
-b0psi2sjpsipi=['b0psi2sjpsipi']
-
-bpka=['bpka']
-
-b0_vars = vc.kinematics + vc.deltae_mbc + vc.track + chiProb + b0psi2smu + b0k0spi
-
-b0_jpsi_vars = vc.kinematics + vc.deltae_mbc + vc.track + chiProb + b0psi2sjpsimu + b0psi2sjpsipi + b0k0spi
-
-bp_vars = vc.kinematics + vc.deltae_mbc + vc.track + chiProb + b0psi2smu + bpka
-bp_jpsi_vars = vc.kinematics + vc.deltae_mbc + vc.track + chiProb + b0psi2sjpsimu + b0psi2sjpsipi + bpka
-
-##############################################################################
-
-################### Saving variables to ntuple ##############################
-rootOutputFile = "B0Bp_realdat_mctest2.root"
-
-ma.variablesToNtuple(decayString="psi(2S):gen",
-                  variables=psi2s_vars,
-                  treename="psi2Smumu",
-                  filename=rootOutputFile,
-                  path=mypath)
-
-ma.variablesToNtuple(decayString="psi(2S):den",
-                  variables=psi2s_vars,
-                  treename="psi2See",
-                  filename=rootOutputFile,
-                  path=mypath)
-
-ma.variablesToNtuple(decayString="psi(2S):jpsi",
-                  variables=psi2sjpsi_vars,
-                  treename="psi2Sjpsimumu",
-                  filename=rootOutputFile,
-                  path=mypath)
-
-ma.variablesToNtuple(decayString="psi(2S):jpsiden",
-                  variables=psi2sjpsi_vars,
-                   treename="psi2Sjpsiee",
-                  filename=rootOutputFile,
-                  path=mypath)
-
-ma.variablesToNtuple(decayString="J/psi:gen",
-                  variables=psi2s_vars,
-                  treename="jpsimumu",
-                  filename=rootOutputFile,
-                  path=mypath)
-
-ma.variablesToNtuple(decayString="J/psi:den",
-                  variables=psi2s_vars,
-                  treename="jpsiee",
-                  filename=rootOutputFile,
-                  path=mypath)
-
-ma.variablesToNtuple(decayString="K_S0:rec",
-                  variables=k0s_vars,
-                  treename="K_S0",
-                  filename=rootOutputFile,
-                  path=mypath)
-
-ma.variablesToNtuple(decayString="pi+:all",
-                  variables=pion_vars,
-                  treename="pi",
-                  filename=rootOutputFile,
-                  path=mypath)
-
-ma.variablesToNtuple(decayString="e+:cor",
-                  variables=lep_vars,
-                  treename="e",
-                  filename=rootOutputFile,
-                  path=mypath)
-
-ma.variablesToNtuple(decayString="mu+:all",
-                  variables=lep_vars,
-                  treename="mu",
-                  filename=rootOutputFile,
-                  path=mypath)
-
-ma.variablesToNtuple(decayString="K+:all",
-                  variables=kp_vars,
-                  treename="Kp",
-                  filename=rootOutputFile,
-                  path=mypath)
-
-ma.variablesToNtuple(decayString="B0:recgen",
-                  variables=b0_vars,
-                  treename="B0_recgen_psi2smumu",
-                  filename=rootOutputFile,
-                  path=mypath)
-
-ma.variablesToNtuple(decayString="B0:recden",
-                  variables=b0_vars,
-                  treename="B0_recden_psi2see",
-                  filename=rootOutputFile,
-                  path=mypath)
-
-ma.variablesToNtuple(decayString="B0:recjpsi",
-                  variables=b0_jpsi_vars,
-                  treename="B0_recgen_psi2sjpsimumu",
-                  filename=rootOutputFile,
-                  path=mypath)
-
-ma.variablesToNtuple(decayString="B0:recjpsiden",
-                  variables=b0_jpsi_vars,
-                  treename="B0_recden_psi2sjpsiee",
-                  filename=rootOutputFile,
-                  path=mypath)
-ma.variablesToNtuple(decayString="B+:recgen",
-                  variables=bp_vars,
-                  treename="Bp_recgen_psi2smumu",
-                  filename=rootOutputFile,
-                  path=mypath)
-
-ma.variablesToNtuple(decayString="B+:recden",
-                  variables=bp_vars,
-                  treename="Bp_recden_psi2see",
-                  filename=rootOutputFile,
-                  path=mypath)
-
-ma.variablesToNtuple(decayString="B+:recjpsi",
-                  variables=bp_jpsi_vars,
-                  treename="Bp_recgen_psi2sjpsimumu",
-                  filename=rootOutputFile,
-                  path=mypath)
-
-ma.variablesToNtuple(decayString="B+:recjpsiden",
-                  variables=bp_jpsi_vars,
-                  treename="Bp_recden_psi2sjpsiee",
-                  filename=rootOutputFile,
-                  path=mypath)
-####################################################################
-
-# process the events
-b2.process(mypath)
+process(analysis_main)
 
 # print out the summary
 print(b2.statistics)
