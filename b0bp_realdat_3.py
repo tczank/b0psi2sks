@@ -623,7 +623,10 @@ ma.inputMdstList(environmentType='default',
 '/ghi/fs01/belle2/bdata/Data/e0007/4S/Bucket6/release-03-01-02/DB00000618/r03846/skim/hlt_hadron/cdst/sub00/cdst.physics.0007.03846.HLT4.hlt_hadron.root',
 '/ghi/fs01/belle2/bdata/Data/e0007/4S/Bucket6/release-03-01-02/DB00000618/r03846/skim/hlt_hadron/cdst/sub00/cdst.physics.0007.03846.HLT5.hlt_hadron.root',
 '/ghi/fs01/belle2/bdata/Data/e0007/4S/Bucket6/release-03-01-02/DB00000618/r03847/skim/hlt_hadron/cdst/sub00/cdst.physics.0007.03847.HLT1.hlt_hadron.root',
-'/ghi/fs01/belle2/bdata/Data/e0007/4S/Bucket6/release-03-01-02/DB00000618/r03847/skim/hlt_hadron/cdst/sub00/cdst.physics.0007.03847.HLT2.hlt_hadron.root'
+'/ghi/fs01/belle2/bdata/Data/e0007/4S/Bucket6/release-03-01-02/DB00000618/r03847/skim/hlt_hadron/cdst/sub00/cdst.physics.0007.03847.HLT2.hlt_hadron.root',
+'/ghi/fs01/belle2/bdata/Data/e0007/4S/Bucket6/release-03-01-02/DB00000618/r03847/skim/hlt_hadron/cdst/sub00/cdst.physics.0007.03847.HLT3.hlt_hadron.root',
+'/ghi/fs01/belle2/bdata/Data/e0007/4S/Bucket6/release-03-01-02/DB00000618/r03847/skim/hlt_hadron/cdst/sub00/cdst.physics.0007.03847.HLT4.hlt_hadron.root',
+'/ghi/fs01/belle2/bdata/Data/e0007/4S/Bucket6/release-03-01-02/DB00000618/r03847/skim/hlt_hadron/cdst/sub00/cdst.physics.0007.03847.HLT5.hlt_hadron.root'
                  ],
                path = mypath)
 
