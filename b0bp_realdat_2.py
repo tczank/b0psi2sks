@@ -216,17 +216,17 @@ ma.inputMdstList(environmentType='default',
 
 ################################################################################
 ma.fillParticleList('K+:all',  '',path=mypath)
-ma.fillParticleList('mu+:all', '',path=mypath)
+ma.fillParticleList('mu+:all', cut='muonID > 0.01',path=mypath)
 ma.fillParticleList('pi+:all', '',path=mypath)
-ma.fillParticleList('e+:all', '',path=mypath)
-ma.fillParticleList('gamma:all', '',path=mypath)
+ma.fillParticleList('e+:all', cut='electronID > 0.01 and d0 < 2 and abs(z0) < 4',path=mypath)
+ma.fillParticleList('gamma:all', cut='E < 1.0',writeOut=False,path=mypath)
 ################################################################################
 
 ########## MC TRUTH MATCHING ###############################################
 ma.cutAndCopyList("mu+:gen", "mu+:all", "charge>0",path=mypath)
 ma.cutAndCopyList("mu-:gen", "mu+:all", "charge<0",path=mypath)
 ma.reconstructDecay(decayString="psi(2S):gen -> mu+:gen mu-:gen",
-                    cut="3.5 < M < 3.9 ",
+                    cut="3.5 < M < 3.8 ",
                     path=mypath)
 
 v.variables.addAlias('mu_EoP','daughter(0,clusterEoP)')
@@ -234,7 +234,7 @@ v.variables.addAlias('mu_EoP','daughter(0,clusterEoP)')
 ma.cutAndCopyList("mu+:gen", "mu+:all", "charge>0",path=mypath)
 ma.cutAndCopyList("mu-:gen", "mu+:all", "charge<0",path=mypath)
 ma.reconstructDecay(decayString="J/psi:gen -> mu+:gen mu-:gen",
-                    cut="2.8 < M 3.2",
+                    cut="2.9 < M < 3.2",
                     path=mypath)
 #ma.matchMCTruth(list_name="J/psi:gen",path=mypath)
 
@@ -242,16 +242,16 @@ ma.correctFSR("e+:cor","e+:all","gamma:all",angleThreshold=5., energyThreshold=1
 ma.cutAndCopyList("e+:gen", "e+:cor", "charge>0",path=mypath)
 ma.cutAndCopyList("e-:gen", "e+:cor", "charge<0",path=mypath)
 ma.reconstructDecay(decayString="psi(2S):den -> e+:gen e-:gen",
-                    cut="3.5 < M < 3.9",
+                    cut="3.5 < M < 3.8",
                     path=mypath)
 
 v.variables.addAlias('e_EoP','daughter(0,clusterEoP)')
 v.variables.addAlias('psi2smuid','daughter(0,muonID)')
-v.variables.addAlias('psi2seid''daughter(0,electronID)')
+v.variables.addAlias('psi2seid','daughter(0,electronID)')
 
 
 ma.reconstructDecay(decayString="J/psi:den -> e+:gen e-:gen",
-                    cut="2.8 < M < 3.2",
+                    cut="2.9 < M < 3.2",
                     path=mypath)
 #ma.matchMCTruth(list_name="psi(2S):den",path=mypath)
 #ma.matchMCTruth(list_name="J/psi:den",path=mypath)
@@ -282,7 +282,7 @@ v.variables.addAlias('pi1_ID','daughter(0, pionID)')
 pi1id=['pi1_ID']
 k0s_vars =  vc.kinematics + vc.inv_mass + chiProb + pi1id
 
-ma.reconstructDecay("psi(2S):jpsi -> J/psi:gen pi+:rec pi-:rec",cut="3.5 < M < 3.9",path=mypath)
+ma.reconstructDecay("psi(2S):jpsi -> J/psi:gen pi+:rec pi-:rec",cut="3.5 < M < 3.8",path=mypath)
 #ma.matchMCTruth("psi(2S):gen",path=mypath)
 
 v.variables.addAlias('mujpsieop','daughter(0,daughter(0,clusterEoP))')
@@ -293,7 +293,7 @@ psi2spi=['psi2spi']
 
 psi2sjpsi_vars = vc.kinematics + vc.inv_mass + chiProb + mujpsieop + psi2spi
 
-ma.reconstructDecay("psi(2S):jpsiden -> J/psi:den pi+:rec pi-:rec",cut="3.5 < M < 3.9",path=mypath)
+ma.reconstructDecay("psi(2S):jpsiden -> J/psi:den pi+:rec pi-:rec",cut="3.5 < M < 3.8",path=mypath)
 
 ma.cutAndCopyList("K+:pos","K+:all", "charge > 0", path=mypath)
 
@@ -302,15 +302,38 @@ ma.reconstructDecay("B0:recden -> psi(2S):den K_S0:rec",cut="Mbc > 5.2 and abs(d
 ma.reconstructDecay("B0:recjpsi -> psi(2S):jpsi K_S0:rec",cut="Mbc > 5.2 and abs(deltaE)<0.15",path=mypath)
 ma.reconstructDecay("B0:recjpsiden -> psi(2S):jpsiden K_S0:rec",cut="Mbc > 5.2 and abs(deltaE)<0.15",path=mypath)
 
+# Fit the B0 Vertex
+ma.vertexRave("B0:recgen", 0., "B0 -> [psi(2S):gen -> ^mu+ ^mu-] K_S0:rec", "",path=mypath)
+ma.vertexRave("B0:recden", 0., "B0 -> [psi(2S):den -> ^e+ ^e-] K_S0:rec", "",path=mypath)
+ma.vertexRave("B0:recjpsi", 0., "B0 -> [psi(2S):jpsi -> [J/psi:gen -> ^mu+ ^mu-] ^pi+ ^pi-] K_S0:rec", "",path=mypath)
+ma.vertexRave("B0:recjpsiden", 0., "B0 -> [psi(2S):jpsiden -> [J/psi:den -> ^e+ ^e-] ^pi+ ^pi-] K_S0:rec", "",path=mypath)
+
+ma.rankByHighest('B0:recgen', 'chiProb', numBest=3, outputVariable='B_vtx_rank', path=mypath)
+ma.rankByHighest('B0:recden', 'chiProb', numBest=3, outputVariable='B_vtx_rank', path=mypath)
+ma.rankByHighest('B0:recjpsi', 'chiProb', numBest=3, outputVariable='B_vtx_rank', path=mypath)
+ma.rankByHighest('B0:recjpsiden', 'chiProb', numBest=3, outputVariable='B_vtx_rank', path=mypath)
+v.variables.addAlias('B_vtx_rank', 'extraInfo(B_vtx_rank)')
+
 ma.reconstructDecay("B+:recgen -> psi(2S):gen K+:pos",cut="Mbc > 5.2 and abs(deltaE)<0.15",path=mypath)
 ma.reconstructDecay("B+:recden -> psi(2S):den K+:pos",cut="Mbc > 5.2 and abs(deltaE)<0.15",path=mypath)
 ma.reconstructDecay("B+:recjpsi -> psi(2S):jpsi K+:pos",cut="Mbc > 5.2 and abs(deltaE)<0.15",path=mypath)
 ma.reconstructDecay("B+:recjpsiden -> psi(2S):jpsiden K+:pos",cut="Mbc > 5.2 and abs(deltaE)<0.15",path=mypath)
 
+# Fit the B+ Vertex
+ma.vertexRave("B+:recgen", 0., "B+ -> [psi(2S):gen -> ^mu+ ^mu-] K+:pos", "",path=mypath)
+ma.vertexRave("B+:recden", 0., "B+ -> [psi(2S):den -> ^e+ ^e-] K+:pos", "",path=mypath)
+ma.vertexRave("B+:recjpsi", 0., "B+ -> [psi(2S):jpsi -> [J/psi:gen -> ^mu+ ^mu-] ^pi+ ^pi-] K+:pos", "",path=mypath)
+ma.vertexRave("B+:recjpsiden", 0., "B+ -> [psi(2S):jpsiden -> [J/psi:den -> ^e+ ^e-] ^pi+ ^pi-] K+:pos", "",path=mypath)
+
+ma.rankByHighest('B+:recgen', 'chiProb', numBest=3, outputVariable='Bp_vtx_rank', path=mypath)
+ma.rankByHighest('B+:recden', 'chiProb', numBest=3, outputVariable='Bp_vtx_rank', path=mypath)
+ma.rankByHighest('B+:recjpsi', 'chiProb', numBest=3, outputVariable='Bp_vtx_rank', path=mypath)
+ma.rankByHighest('B+:recjpsiden', 'chiProb', numBest=3, outputVariable='Bp_vtx_rank', path=mypath)
+v.variables.addAlias('Bp_vtx_rank', 'extraInfo(Bp_vtx_rank)')
+
 v.variables.addAlias('b0psi2smuEoP','daughter(0,daughter(0,clusterEoP))')
 v.variables.addAlias('b0psi2smuID','daughter(0,daughter(0,muonID))')
 v.variables.addAlias('b0psi2seID','daughter(0,daughter(0,electronID))')
-
 
 v.variables.addAlias('b0psi2sjpsimuEoP','daughter(0,daughter(0,daughter(0,clusterEoP)))')
 v.variables.addAlias('b0psi2sjpsimuID','daughter(0,daughter(0,daughter(0,muonID)))')
@@ -321,6 +344,9 @@ v.variables.addAlias('b0psi2sjpsipiID','daughter(0,daughter(1,pionID))')
 
 v.variables.addAlias('b0k0spiID','daughter(1,daughter(0,pionID))')
 v.variables.addAlias('bpkaID','daughter(1,kaonID)')
+
+rankB0 = ['B_vtx_rank']
+rankBp = ['Bp_vtx_rank']
 
 b0psi2smu=['b0psi2smuEoP']
 b0psi2smuID=['b0psi2smuID']
@@ -335,12 +361,12 @@ b0psi2sjpsipi=['b0psi2sjpsipiID']
 
 bpka=['bpkaID']
 
-b0_vars = vc.kinematics + vc.deltae_mbc + vc.track + chiProb + b0psi2smu + b0psi2smuID + b0psi2seID + b0k0spi
+b0_vars = vc.kinematics + vc.deltae_mbc + vc.track + chiProb + b0psi2smu + b0psi2smuID + b0psi2seID + b0k0spi + rankB0
 
-b0_jpsi_vars = vc.kinematics + vc.deltae_mbc + vc.track + chiProb + b0psi2sjpsimu + b0psi2sjpsimuID + b0psi2sjpsieID + b0psi2sjpsipi + b0k0spi
+b0_jpsi_vars = vc.kinematics + vc.deltae_mbc + vc.track + chiProb + b0psi2sjpsimu + b0psi2sjpsimuID + b0psi2sjpsieID + b0psi2sjpsipi + b0k0spi + rankB0
 
-bp_vars = vc.kinematics + vc.deltae_mbc + vc.track + chiProb + b0psi2smu + b0psi2smuID + b0psi2seID + bpka
-bp_jpsi_vars = vc.kinematics + vc.deltae_mbc + vc.track + chiProb + b0psi2sjpsimu + b0psi2sjpsimuID + b0psi2sjpsieID + b0psi2sjpsipi + bpka
+bp_vars = vc.kinematics + vc.deltae_mbc + vc.track + chiProb + b0psi2smu + b0psi2smuID + b0psi2seID + bpka + rankBp
+bp_jpsi_vars = vc.kinematics + vc.deltae_mbc + vc.track + chiProb + b0psi2sjpsimu + b0psi2sjpsimuID + b0psi2sjpsieID + b0psi2sjpsipi + bpka + rankBp
 
 ##############################################################################
 
