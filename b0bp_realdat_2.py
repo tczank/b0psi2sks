@@ -230,13 +230,15 @@ ma.reconstructDecay(decayString="psi(2S):gen -> mu+:gen mu-:gen",
                     path=mypath)
 
 v.variables.addAlias('mu_EoP','daughter(0,clusterEoP)')
+v.variables.addAlias('psi2smuid','daughter(0,muonID)')
 
-ma.cutAndCopyList("mu+:gen", "mu+:all", "charge>0",path=mypath)
-ma.cutAndCopyList("mu-:gen", "mu+:all", "charge<0",path=mypath)
 ma.reconstructDecay(decayString="J/psi:gen -> mu+:gen mu-:gen",
                     cut="2.9 < M < 3.2",
                     path=mypath)
 #ma.matchMCTruth(list_name="J/psi:gen",path=mypath)
+
+v.variables.addAlias('jpsimu_EoP','daughter(0,clusterEoP)')
+v.variables.addAlias('jpsimuID','daughter(0,muonID)')
 
 ma.correctFSR("e+:cor","e+:all","gamma:all",angleThreshold=5., energyThreshold=1., writeOut=False,path=mypath) #from Yusa-san's steering
 ma.cutAndCopyList("e+:gen", "e+:cor", "charge>0",path=mypath)
@@ -245,14 +247,16 @@ ma.reconstructDecay(decayString="psi(2S):den -> e+:gen e-:gen",
                     cut="3.5 < M < 3.8",
                     path=mypath)
 
-v.variables.addAlias('e_EoP','daughter(0,clusterEoP)')
-v.variables.addAlias('psi2smuid','daughter(0,muonID)')
-v.variables.addAlias('psi2seid','daughter(0,electronID)')
-
+v.variables.addAlias('e_EoP','daughter(0,daughter(0,clusterEoP))')
+v.variables.addAlias('psi2seid','daughter(0,daughter(0,electronID))')
 
 ma.reconstructDecay(decayString="J/psi:den -> e+:gen e-:gen",
                     cut="2.9 < M < 3.2",
                     path=mypath)
+
+v.variables.addAlias('jpsie_EoP','daughter(0,daugther(0,clusterEoP))')
+v.variables.addAlias('jpsieID','daughter(0,daughter(0,electronID))')
+
 #ma.matchMCTruth(list_name="psi(2S):den",path=mypath)
 #ma.matchMCTruth(list_name="J/psi:den",path=mypath)
 
@@ -286,6 +290,7 @@ ma.reconstructDecay("psi(2S):jpsi -> J/psi:gen pi+:rec pi-:rec",cut="3.5 < M < 3
 #ma.matchMCTruth("psi(2S):gen",path=mypath)
 
 v.variables.addAlias('mujpsieop','daughter(0,daughter(0,clusterEoP))')
+v.variables.addAlias('mujpsimuID','daughter(0,daughter(0,muonID))')
 v.variables.addAlias('psi2spi','daughter(1,pionID)')
 
 mujpsieop=['mujpsieop']
@@ -294,6 +299,9 @@ psi2spi=['psi2spi']
 psi2sjpsi_vars = vc.kinematics + vc.inv_mass + chiProb + mujpsieop + psi2spi
 
 ma.reconstructDecay("psi(2S):jpsiden -> J/psi:den pi+:rec pi-:rec",cut="3.5 < M < 3.8",path=mypath)
+
+v.variables.addAlias('ejpsieop','daughter(0,daughter(0,clusterEoP))')
+v.variables.addAlias('ejpsieID','daughter(0,daughter(0,electronID))')
 
 ma.cutAndCopyList("K+:pos","K+:all", "charge > 0", path=mypath)
 
@@ -331,28 +339,50 @@ ma.rankByHighest('B+:recjpsi', 'chiProb', numBest=3, outputVariable='Bp_vtx_rank
 ma.rankByHighest('B+:recjpsiden', 'chiProb', numBest=3, outputVariable='Bp_vtx_rank', path=mypath)
 v.variables.addAlias('Bp_vtx_rank', 'extraInfo(Bp_vtx_rank)')
 
+#################### B0 -> [psi(2S) -> l+ l-] K_S0 daughter variables ######################
 v.variables.addAlias('b0psi2smuEoP','daughter(0,daughter(0,clusterEoP))')
+v.variables.addAlias('b0psi2seEoP','daughter(0,daughter(0,daughter(0,clusterEoP)))')
+v.variables.addAlias('b0psi2sinvM','daughter(0,M)')
+v.variables.addAlias('b0psi2sp','daughter(0,p)')
+v.variables.addAlias('b0psi2spx','daughter(0,px)')
+v.variables.addAlias('b0psi2spy','daughter(0,py)')
+v.variables.addAlias('b0psi2spz','daughter(0,pz)')
+v.variables.addAlias('b0psi2spt','daughter(0,pt)')
+v.variables.addAlias('b0psi2scostheta','daughter(0,cosTheta)')
 v.variables.addAlias('b0psi2smuID','daughter(0,daughter(0,muonID))')
-v.variables.addAlias('b0psi2seID','daughter(0,daughter(0,electronID))')
+v.variables.addAlias('b0psi2seID','daughter(0,daughter(0,daughter(0,electronID)))')
+###########################################################################################
 
+#################### B0 -> [psi(2S) -> [J/psi -> l+ l-] pi+ pi-] K_S0 daughter variables ######################
 v.variables.addAlias('b0psi2sjpsimuEoP','daughter(0,daughter(0,daughter(0,clusterEoP)))')
+v.variables.addAlias('b0psi2sjpsieEoP','daughter(0,daughter(0,daughter(0,daughter(0,clusterEoP))))')
+v.variables.addAlias('b0psi2sjpsiinvM','daughter(0,daughter(0,M))')
+v.variables.addAlias('b0psi2sjpsip','daughter(0,p)')
+v.variables.addAlias('b0psi2sjpsipx','daughter(0,daughter(0,px))')
+v.variables.addAlias('b0psi2sjpsipy','daughter(0,daughter(0,py))')
+v.variables.addAlias('b0psi2sjpsipz','daughter(0,daughter(0,pz))')
 v.variables.addAlias('b0psi2sjpsimuID','daughter(0,daughter(0,daughter(0,muonID)))')
-v.variables.addAlias('b0psi2sjpsieID','daughter(0,daughter(0,daughter(0,electronID)))')
-
-
+v.variables.addAlias('b0psi2sjpsieID','daughter(0,daughter(0,daughter(0,daughter(0,electronID))))')
 v.variables.addAlias('b0psi2sjpsipiID','daughter(0,daughter(1,pionID))')
+################################################################################################################
 
+################### Common daughthers ##################################
 v.variables.addAlias('b0k0spiID','daughter(1,daughter(0,pionID))')
 v.variables.addAlias('bpkaID','daughter(1,kaonID)')
+#######################################################################
 
 rankB0 = ['B_vtx_rank']
 rankBp = ['Bp_vtx_rank']
 
 b0psi2smu=['b0psi2smuEoP']
+b0psi2se=['b0psi2seEoP']
+b0psi2skin=['b0psi2sinvM','b0psi2sp','b0psi2spx','b0psi2spy','b0psi2spz']
 b0psi2smuID=['b0psi2smuID']
 b0psi2seID=['b0psi2seID']
 
 b0psi2sjpsimu=['b0psi2sjpsimuEoP']
+b0psi2sjpsie=['b0psi2sjpsieEoP']
+b0psi2sjpsikin=['b0psi2sjpsiinvM','b0psi2sjpsip','b0psi2sjpsipx','b0psi2sjpsipy','b0psi2sjpsipz']
 b0psi2sjpsimuID=['b0psi2sjpsimuID']
 b0psi2sjpsieID=['b0psi2sjpsieID']
 
@@ -361,127 +391,68 @@ b0psi2sjpsipi=['b0psi2sjpsipiID']
 
 bpka=['bpkaID']
 
-b0_vars = vc.kinematics + vc.deltae_mbc + vc.track + chiProb + b0psi2smu + b0psi2smuID + b0psi2seID + b0k0spi + rankB0
+#b0_vars = vc.kinematics + vc.deltae_mbc + vc.track + chiProb + b0psi2smu + b0psi2smuID + b0psi2seID + b0k0spi + rankB0 + b0psi2skin
 
-b0_jpsi_vars = vc.kinematics + vc.deltae_mbc + vc.track + chiProb + b0psi2sjpsimu + b0psi2sjpsimuID + b0psi2sjpsieID + b0psi2sjpsipi + b0k0spi + rankB0
+b0_jpsi_vars_mu = vc.kinematics + vc.deltae_mbc + vc.track + chiProb + b0psi2sjpsimu + b0psi2sjpsimuID + b0psi2sjpsipi + b0k0spi + rankB0 + b0psi2sjpsikin
+b0_jpsi_vars_e = vc.kinematics + vc.deltae_mbc + vc.track + chiProb + b0psi2sjpsie + b0psi2sjpsieID + b0psi2sjpsipi + b0k0spi + rankB0 + b0psi2sjpsikin
 
-bp_vars = vc.kinematics + vc.deltae_mbc + vc.track + chiProb + b0psi2smu + b0psi2smuID + b0psi2seID + bpka + rankBp
-bp_jpsi_vars = vc.kinematics + vc.deltae_mbc + vc.track + chiProb + b0psi2sjpsimu + b0psi2sjpsimuID + b0psi2sjpsieID + b0psi2sjpsipi + bpka + rankBp
+b0_vars_mu =  vc.kinematics + vc.deltae_mbc + vc.track + chiProb + b0psi2smu + b0psi2smuID + b0k0spi + rankB0 + b0psi2skin
+b0_vars_e =  vc.kinematics + vc.deltae_mbc + vc.track + chiProb + b0psi2se + b0psi2seID + b0k0spi + rankB0 + b0psi2skin
+
+bp_vars_mu = vc.kinematics + vc.deltae_mbc + vc.track + chiProb + b0psi2smu + b0psi2smuID + bpka + rankBp + b0psi2skin
+bp_vars_e = vc.kinematics + vc.deltae_mbc + vc.track + chiProb + b0psi2se + b0psi2seID + bpka + rankBp + b0psi2skin
+
+bp_jpsi_vars_mu = vc.kinematics + vc.deltae_mbc + vc.track + chiProb + b0psi2sjpsimu + b0psi2sjpsimuID + b0psi2sjpsipi + bpka + rankBp + b0psi2sjpsikin
+bp_jpsi_vars_e = vc.kinematics + vc.deltae_mbc + vc.track + chiProb + b0psi2sjpsie + b0psi2sjpsieID + b0psi2sjpsipi + bpka + rankBp + b0psi2sjpsikin
 
 ##############################################################################
 
 ################### Saving variables to ntuple ##############################
-rootOutputFile = "B0Bp_realdat_bucket4_2ndtest.root"
-
-#ma.variablesToNtuple(decayString="psi(2S):gen",
-#                  variables=psi2s_vars,
-#                  treename="psi2Smumu",
-#                  filename=rootOutputFile,
-#                  path=mypath)
-
-#ma.variablesToNtuple(decayString="psi(2S):den",
-#                  variables=psi2s_vars,
-#                  treename="psi2See",
-#                  filename=rootOutputFile,
-#                  path=mypath)
-
-#ma.variablesToNtuple(decayString="psi(2S):jpsi",
-#                  variables=psi2sjpsi_vars,
-#                  treename="psi2Sjpsimumu",
-#                  filename=rootOutputFile,
-#                  path=mypath)
-
-#ma.variablesToNtuple(decayString="psi(2S):jpsiden",
-#                  variables=psi2sjpsi_vars,
-#                   treename="psi2Sjpsiee",
-#                  filename=rootOutputFile,
-#                  path=mypath)
-
-#ma.variablesToNtuple(decayString="J/psi:gen",
-#                  variables=psi2s_vars,
-#                  treename="jpsimumu",
-#                  filename=rootOutputFile,
-#                  path=mypath)
-
-#ma.variablesToNtuple(decayString="J/psi:den",
-#                  variables=psi2s_vars,
-#                  treename="jpsiee",
-#                  filename=rootOutputFile,
-#                  path=mypath)
-
-#ma.variablesToNtuple(decayString="K_S0:rec",
-#                  variables=k0s_vars,
-#                  treename="K_S0",
-#                  filename=rootOutputFile,
-#                  path=mypath)
-
-#ma.variablesToNtuple(decayString="pi+:all",
-#                  variables=pion_vars,
-#                  treename="pi",
-#                  filename=rootOutputFile,
-#                  path=mypath)
-
-#ma.variablesToNtuple(decayString="e+:cor",
-#                  variables=lep_vars,
-#                  treename="e",
-#                  filename=rootOutputFile,
-#                  path=mypath)
-
-#ma.variablesToNtuple(decayString="mu+:all",
-#                  variables=lep_vars,
-#                  treename="mu",
-#                  filename=rootOutputFile,
-#                  path=mypath)
-
-#ma.variablesToNtuple(decayString="K+:all",
-#                  variables=kp_vars,
-#                  treename="Kp",
-#                  filename=rootOutputFile,
-#                  path=mypath)
+rootOutputFile = "B0Bp_realdat_bucket4_maybecorrect_psi2skin.root"
 
 ma.variablesToNtuple(decayString="B0:recgen",
-                  variables=b0_vars,
+                  variables=b0_vars_mu,
                   treename="B0_recgen_psi2smumu",
                   filename=rootOutputFile,
                   path=mypath)
 
 ma.variablesToNtuple(decayString="B0:recden",
-                  variables=b0_vars,
+                  variables=b0_vars_e,
                   treename="B0_recden_psi2see",
                   filename=rootOutputFile,
                   path=mypath)
 
 ma.variablesToNtuple(decayString="B0:recjpsi",
-                  variables=b0_jpsi_vars,
+                  variables=b0_jpsi_vars_mu,
                   treename="B0_recgen_psi2sjpsimumu",
                   filename=rootOutputFile,
                   path=mypath)
 
 ma.variablesToNtuple(decayString="B0:recjpsiden",
-                  variables=b0_jpsi_vars,
+                  variables=b0_jpsi_vars_e,
                   treename="B0_recden_psi2sjpsiee",
                   filename=rootOutputFile,
                   path=mypath)
 ma.variablesToNtuple(decayString="B+:recgen",
-                  variables=bp_vars,
+                  variables=bp_vars_mu,
                   treename="Bp_recgen_psi2smumu",
                   filename=rootOutputFile,
                   path=mypath)
 
 ma.variablesToNtuple(decayString="B+:recden",
-                  variables=bp_vars,
+                  variables=bp_vars_e,
                   treename="Bp_recden_psi2see",
                   filename=rootOutputFile,
                   path=mypath)
 
 ma.variablesToNtuple(decayString="B+:recjpsi",
-                  variables=bp_jpsi_vars,
+                  variables=bp_jpsi_vars_mu,
                   treename="Bp_recgen_psi2sjpsimumu",
                   filename=rootOutputFile,
                   path=mypath)
 
 ma.variablesToNtuple(decayString="B+:recjpsiden",
-                  variables=bp_jpsi_vars,
+                  variables=bp_jpsi_vars_e,
                   treename="Bp_recden_psi2sjpsiee",
                   filename=rootOutputFile,
                   path=mypath)
