@@ -361,6 +361,8 @@ v.variables.addAlias('b0psi2sjpsip','daughter(0,p)')
 v.variables.addAlias('b0psi2sjpsipx','daughter(0,daughter(0,px))')
 v.variables.addAlias('b0psi2sjpsipy','daughter(0,daughter(0,py))')
 v.variables.addAlias('b0psi2sjpsipz','daughter(0,daughter(0,pz))')
+v.variables.addAlias('b0psi2sjpsipt','daughter(0,daughter(0,pt))')
+v.variables.addAlias('b0psi2sjpsicostheta','daughter(0,daughter(0,cosTheta))')
 v.variables.addAlias('b0psi2sjpsimuID','daughter(0,daughter(0,daughter(0,muonID)))')
 v.variables.addAlias('b0psi2sjpsieID','daughter(0,daughter(0,daughter(0,daughter(0,electronID))))')
 v.variables.addAlias('b0psi2sjpsipiID','daughter(0,daughter(1,pionID))')
@@ -368,7 +370,22 @@ v.variables.addAlias('b0psi2sjpsipiID','daughter(0,daughter(1,pionID))')
 
 ################### Common daughthers ##################################
 v.variables.addAlias('b0k0spiID','daughter(1,daughter(0,pionID))')
+v.variables.addAlias('b0k0sM','daughter(1,M)')
+v.variables.addAlias('b0k0sp','daughter(1,p)')
+v.variables.addAlias('b0k0spx','daughter(1,px)')
+v.variables.addAlias('b0k0spy','daughter(1,py)')
+v.variables.addAlias('b0k0spz','daughter(1,pz)')
+v.variables.addAlias('b0k0spt','daughter(1,pt)')
+v.variables.addAlias('b0k0scostheta','daughter(1,cosTheta)')
+
 v.variables.addAlias('bpkaID','daughter(1,kaonID)')
+v.variables.addAlias('bpkaM','daughter(1,M)')
+v.variables.addAlias('bpkap','daughter(1,p)')
+v.variables.addAlias('bpkapx','daughter(1,px)')
+v.variables.addAlias('bpkapy','daughter(1,py)')
+v.variables.addAlias('bpkapz','daughter(1,pz)')
+v.variables.addAlias('bpkapt','daughter(1,pt)')
+v.variables.addAlias('bpkacostheta','daughter(1,cosTheta)')
 #######################################################################
 
 rankB0 = ['B_vtx_rank']
@@ -376,20 +393,20 @@ rankBp = ['Bp_vtx_rank']
 
 b0psi2smu=['b0psi2smuEoP']
 b0psi2se=['b0psi2seEoP']
-b0psi2skin=['b0psi2sinvM','b0psi2sp','b0psi2spx','b0psi2spy','b0psi2spz']
+b0psi2skin=['b0psi2sinvM','b0psi2sp','b0psi2spx','b0psi2spy','b0psi2spz','b0psi2spt','b0psi2scostheta']
 b0psi2smuID=['b0psi2smuID']
 b0psi2seID=['b0psi2seID']
 
 b0psi2sjpsimu=['b0psi2sjpsimuEoP']
 b0psi2sjpsie=['b0psi2sjpsieEoP']
-b0psi2sjpsikin=['b0psi2sjpsiinvM','b0psi2sjpsip','b0psi2sjpsipx','b0psi2sjpsipy','b0psi2sjpsipz']
+b0psi2sjpsikin=['b0psi2sjpsiinvM','b0psi2sjpsip','b0psi2sjpsipx','b0psi2sjpsipy','b0psi2sjpsipz','b0psi2sjpsipt','b0psi2sjpsicostheta']
 b0psi2sjpsimuID=['b0psi2sjpsimuID']
 b0psi2sjpsieID=['b0psi2sjpsieID']
 
-b0k0spi=['b0k0spiID']
+b0k0spi=['b0k0spiID','b0k0sM','b0k0sp','b0k0spx','b0k0spy','b0k0spz','b0k0spt','b0k0scostheta']
 b0psi2sjpsipi=['b0psi2sjpsipiID']
 
-bpka=['bpkaID']
+bpka=['bpkaID','bpkaM','bpkap','bpkapx','bpkapy','bpkapz','bpkapt','bpkacostheta']
 
 #b0_vars = vc.kinematics + vc.deltae_mbc + vc.track + chiProb + b0psi2smu + b0psi2smuID + b0psi2seID + b0k0spi + rankB0 + b0psi2skin
 
