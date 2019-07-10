@@ -715,7 +715,6 @@ ma.reconstructDecay("B0:recden -> psi(2S):den K_S0:rec",cut="Mbc > 5.2 and abs(d
 ma.reconstructDecay("B0:recjpsi -> psi(2S):jpsi K_S0:rec",cut="Mbc > 5.2 and abs(deltaE)<0.15",path=mypath)
 ma.reconstructDecay("B0:recjpsiden -> psi(2S):jpsiden K_S0:rec",cut="Mbc > 5.2 and abs(deltaE)<0.15",path=mypath)
 
-
 # Fit the B0 Vertex
 ma.vertexRave("B0:recgen", 0., "B0 -> [psi(2S):gen -> ^mu+ ^mu-] K_S0:rec", "",path=mypath)
 ma.vertexRave("B0:recden", 0., "B0 -> [psi(2S):den -> ^e+ ^e-] K_S0:rec", "",path=mypath)

@@ -2242,10 +2242,22 @@ ma.reconstructDecay("psi(2S):jpsiden -> J/psi:den pi+:rec pi-:rec",cut="3.5 < M 
 
 ma.cutAndCopyList("K+:pos","K+:all", "charge > 0", path=mypath)
 
+# Fit the B0 Vertex
 ma.reconstructDecay("B0:recgen -> psi(2S):gen K_S0:rec",cut="Mbc > 5.2 and abs(deltaE)<0.15",path=mypath)
 ma.reconstructDecay("B0:recden -> psi(2S):den K_S0:rec",cut="Mbc > 5.2 and abs(deltaE)<0.15",path=mypath)
 ma.reconstructDecay("B0:recjpsi -> psi(2S):jpsi K_S0:rec",cut="Mbc > 5.2 and abs(deltaE)<0.15",path=mypath)
 ma.reconstructDecay("B0:recjpsiden -> psi(2S):jpsiden K_S0:rec",cut="Mbc > 5.2 and abs(deltaE)<0.15",path=mypath)
+
+ma.rankByHighest('B0:recgen', 'chiProb', numBest=3, outputVariable='B_vtx_rank', path=mypath)
+ma.rankByHighest('B0:recden', 'chiProb', numBest=3, outputVariable='B_vtx_rank', path=mypath)
+ma.rankByHighest('B0:recjpsi', 'chiProb', numBest=3, outputVariable='B_vtx_rank', path=mypath)
+ma.rankByHighest('B0:recjpsiden', 'chiProb', numBest=3, outputVariable='B_vtx_rank', path=mypath)
+v.variables.addAlias('B_vtx_rank', 'extraInfo(B_vtx_rank)')
+
+ma.reconstructDecay("B+:recgen -> psi(2S):gen K+:pos",cut="Mbc > 5.2 and abs(deltaE)<0.15",path=mypath)
+ma.reconstructDecay("B+:recden -> psi(2S):den K+:pos",cut="Mbc > 5.2 and abs(deltaE)<0.15",path=mypath)
+ma.reconstructDecay("B+:recjpsi -> psi(2S):jpsi K+:pos",cut="Mbc > 5.2 and abs(deltaE)<0.15",path=mypath)
+ma.reconstructDecay("B+:recjpsiden -> psi(2S):jpsiden K+:pos",cut="Mbc > 5.2 and abs(deltaE)<0.15",path=mypath)
 
 # Fit the B+ Vertex
 ma.vertexRave("B+:recgen", 0., "B+ -> [psi(2S):gen -> ^mu+ ^mu-] K+:pos", "",path=mypath)
@@ -2345,7 +2357,7 @@ bp_jpsi_vars_e = vc.kinematics + vc.deltae_mbc + vc.track + chiProb + b0psi2sjps
 ##############################################################################
 
 ################### Saving variables to ntuple ##############################
-rootOutputFile = "B0Bp_realdat_bucket4_maybecorrect_psi2skin.root"
+rootOutputFile = "B0Bp_realdat_bucket6_unofficial.root"
 
 ma.variablesToNtuple(decayString="B0:recgen",
                   variables=b0_vars_mu,
