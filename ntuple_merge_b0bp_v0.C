@@ -32,7 +32,7 @@ void ntuple_merge_b0bp_v0()
 
                                  1000,0.0,1.9);
 
-    TNtuple * merged_B0 = new TNtuple("B0_alldec","Mbc, EoP, #psi(2S)invM","Mbc:psi2sinvM:EoP");
+    TNtuple * merged_B0 = new TNtuple("B0_alldec","Mbc, EoP, #psi(2S)invM","Mbc:psi2sinvM:EoP:k0sinvM");
 
     TNtuple *B0psi2s[4];
     TNtuple *Bppsi2s[4];
@@ -49,7 +49,9 @@ void ntuple_merge_b0bp_v0()
         Double_t Mbc=0;
         Double_t b0psi2sinvM=0;
         Double_t b0psi2sjpsiinvM=0;
+        Double_t k0sinvM = 0;
         B0psi2s[j]->SetBranchAddress("Mbc",&Mbc);
+        B0psi2s[j]->SetBranchAddress("b0k0sM",&k0sinvM);
         if(B0psi2s[j]->GetBranchStatus("b0psi2sinvM") == 1){
           B0psi2s[j]->SetBranchAddress("b0psi2sinvM",&b0psi2sinvM);}
         else{
@@ -74,20 +76,20 @@ void ntuple_merge_b0bp_v0()
           B0psi2s[j]->GetEntry(ki);
           hnseg->Fill(Mbc);
           if(psi2sjpsiflag == 0 && psi2seflag ==0){
-            merged_B0->Fill(Mbc,b0psi2sinvM,b0psi2smuEoP);
+            merged_B0->Fill(Mbc,b0psi2sinvM,b0psi2smuEoP,k0sinvM);
           hpsi2sinvm->Fill(b0psi2sinvM);
           hpsi2smuEoP->Fill(b0psi2smuEoP);}
           else if(psi2sjpsiflag == 1 && psi2seflag == 0){
-            merged_B0->Fill(Mbc,b0psi2sjpsiinvM,b0psi2sjpsimuEoP);
+            merged_B0->Fill(Mbc,b0psi2sjpsiinvM,b0psi2sjpsimuEoP,k0sinvM);
             hpsi2sinvm->Fill(b0psi2sjpsiinvM);
           hpsi2smuEoP->Fill(b0psi2sjpsimuEoP);}
           else if(psi2sjpsiflag == 0 && psi2seflag == 1){
-            merged_B0->Fill(Mbc,b0psi2sinvM,b0psi2seEoP);
+            merged_B0->Fill(Mbc,b0psi2sinvM,b0psi2seEoP,k0sinvM);
             hpsi2sinvm->Fill(b0psi2sinvM);
             hpsi2smuEoP->Fill(b0psi2seEoP);
           }
           else{
-            merged_B0->Fill(Mbc,b0psi2sjpsiinvM,b0psi2sjpsieEoP);
+            merged_B0->Fill(Mbc,b0psi2sjpsiinvM,b0psi2sjpsieEoP,k0sinvM);
             hpsi2sinvm->Fill(b0psi2sjpsiinvM);
             hpsi2smuEoP->Fill(b0psi2sjpsieEoP);
           }
