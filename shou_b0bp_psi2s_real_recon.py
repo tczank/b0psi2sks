@@ -78,8 +78,8 @@ lep_vars = EoP
 
 pion_vars = piid
 
-ma.cutAndCopyList("pi+:rec", "pi+:all", "charge>0",path=mypath)
-ma.cutAndCopyList("pi-:rec", "pi+:all", "charge<0",path=mypath)
+ma.cutAndCopyList("pi+:rec", "pi+:all", "charge>0 and pionID > 0.1",path=mypath)
+ma.cutAndCopyList("pi-:rec", "pi+:all", "charge<0 and pionID > 0.1",path=mypath)
 ma.reconstructDecay("K_S0:rec -> pi+:rec pi-:rec",cut="0.3 < M < 0.7",path=mypath)
 
 v.variables.addAlias('pi1_ID','daughter(0, pionID)')
@@ -98,7 +98,7 @@ psi2sjpsi_vars = vc.kinematics + vc.inv_mass + chiProb + mujpsieop + psi2spi
 
 ma.reconstructDecay("psi(2S):jpsiden -> J/psi:den pi+:rec pi-:rec",cut="3.5 < M < 3.8",path=mypath)
 
-ma.cutAndCopyList("K+:pos","K+:all", "charge > 0", path=mypath)
+ma.cutAndCopyList("K+:pos","K+:all", "charge > 0 and kaonID > 0.1", path=mypath)
 
 # Fit the B0 Vertex
 ma.reconstructDecay("B0:recgen -> psi(2S):gen K_S0:rec",cut="Mbc > 5.2 and abs(deltaE)<0.15",path=mypath)
