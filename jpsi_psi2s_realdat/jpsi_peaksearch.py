@@ -31,16 +31,14 @@ ma.fillParticleList('e+:tight', cut='electronID > 0.1 and d0 < 2 and abs(z0) < 4
 ma.fillParticleList('gamma:all', cut='E < 1.0',writeOut=False,path=mypath)
 ################################################################################
 
-ma.reconstructDecay(decayString="J/psi:gen -> mu+:loose mu+:tight",
+ma.reconstructDecay(decayString="J/psi:gen -> mu+:loose mu-:tight",
                     cut="2.9 < M < 3.2",
                     path=mypath)
 
 ma.correctFSR("e+:loosecor","e+:loose","gamma:all",angleThreshold=5., energyThreshold=1., writeOut=False,path=mypath) #correction from Takeo-san (mu+ and mu- not needed)
 ma.correctFSR("e+:tightcor","e+:tight","gamma:all",angleThreshold=5., energyThreshold=1., writeOut=False,path=mypath) #from Yusa-san's steering
-ma.cutAndCopyList("e+:gen", "e+:cor", "charge>0",path=mypath)
-ma.cutAndCopyList("e-:gen", "e+:cor", "charge<0",path=mypath)
 
-ma.reconstructDecay(decayString="J/psi:den -> e+:loosecor e+:tightcor",
+ma.reconstructDecay(decayString="J/psi:den -> e+:loosecor e-:tightcor",
                     cut="2.9 < M < 3.2",
                     path=mypath)
 
