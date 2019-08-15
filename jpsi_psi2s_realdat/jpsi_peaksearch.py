@@ -24,20 +24,23 @@ ma.inputMdst(environmentType='default',
 			 path=mypath)
 
 ################################################################################
-ma.fillParticleList('mu+:all', cut='muonID > 0.01',path=mypath)
-ma.fillParticleList('e+:all', cut='electronID > 0.01 and d0 < 2 and abs(z0) < 4',path=mypath)
+ma.fillParticleList('mu+:loose', cut='muonID > 0.01',path=mypath)
+ma.fillParticleList('mu+:tight', cut='muonID > 0.1', path=mypath)
+ma.fillParticleList('e+:loose', cut='electronID > 0.01 and d0 < 2 and abs(z0) < 4',path=mypath)
+ma.fillParticleList('e+:tight', cut='electronID > 0.1 and d0 < 2 and abs(z0) < 4', path=mypath)
 ma.fillParticleList('gamma:all', cut='E < 1.0',writeOut=False,path=mypath)
 ################################################################################
 
-ma.reconstructDecay(decayString="J/psi:gen -> mu+:gen mu-:gen",
+ma.reconstructDecay(decayString="J/psi:gen -> mu+:loose mu+:tight",
                     cut="2.9 < M < 3.2",
                     path=mypath)
 
-ma.correctFSR("e+:cor","e+:all","gamma:all",angleThreshold=5., energyThreshold=1., writeOut=False,path=mypath) #from Yusa-san's steering
+ma.correctFSR("e+:loosecor","e+:loose","gamma:all",angleThreshold=5., energyThreshold=1., writeOut=False,path=mypath) #correction from Takeo-san (mu+ and mu- not needed)
+ma.correctFSR("e+:tightcor","e+:tight","gamma:all",angleThreshold=5., energyThreshold=1., writeOut=False,path=mypath) #from Yusa-san's steering
 ma.cutAndCopyList("e+:gen", "e+:cor", "charge>0",path=mypath)
 ma.cutAndCopyList("e-:gen", "e+:cor", "charge<0",path=mypath)
 
-ma.reconstructDecay(decayString="J/psi:den -> e+:gen e-:gen",
+ma.reconstructDecay(decayString="J/psi:den -> e+:loosecor e+:tightcor",
                     cut="2.9 < M < 3.2",
                     path=mypath)
 
@@ -46,7 +49,7 @@ EoP=['clusterEoP']
 costheta=['cosTheta']
 p123=['px','py','pz']
 
-psi2s_vars = vc.mc_truth + vc.kinematics + vc.inv_mass + vc.mc_variables + chiProb + EoP+ p123 
+psi2s_vars = vc.mc_truth + vc.kinematics + vc.inv_mass + vc.mc_variables + chiProb + EoP+ p123
 
 ##############################################################################
 
