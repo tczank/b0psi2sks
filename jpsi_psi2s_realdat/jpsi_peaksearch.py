@@ -25,22 +25,26 @@ ma.inputMdst(environmentType='default',
 
 ################################################################################
 ma.fillParticleList('mu+:loose', cut='muonID > 0.01',path=mypath)
-ma.fillParticleList('mu+:tight', cut='muonID > 0.1', path=mypath)
+ma.fillParticleList('mu+:tight', cut='muonID > 0.95', path=mypath)
 ma.fillParticleList('e+:loose', cut='electronID > 0.01 and d0 < 2 and abs(z0) < 4',path=mypath)
-ma.fillParticleList('e+:tight', cut='electronID > 0.1 and d0 < 2 and abs(z0) < 4', path=mypath)
+ma.fillParticleList('e+:tight', cut='electronID > 0.95 and abs(dr) < 2 and abs(dz) < 5 and useLabFrame(p) > 0.1', path=mypath)
 ma.fillParticleList('gamma:all', cut='E < 1.0',writeOut=False,path=mypath)
 ################################################################################
 
 ma.reconstructDecay(decayString="J/psi:gen -> mu+:loose mu-:loose",
-                    cut="2.9 < M < 4.0",
+                    cut="2.9 < M < 3.2 and foxWolframR2 < 0.4 and useRestFrame(p) < 2",
                     path=mypath)
+
+ma.reconstructDecay(decayString="psi(2S):gen -> mu+:loose mu-:loose", cut="3.5 < M < 3.8", path=mypath)
 
 ma.correctFSR("e+:loosecor","e+:loose","gamma:all",angleThreshold=5., energyThreshold=1., writeOut=False,path=mypath) #correction from Takeo-san (mu+ and mu- not needed)
 ma.correctFSR("e+:tightcor","e+:tight","gamma:all",angleThreshold=5., energyThreshold=1., writeOut=False,path=mypath) #from Yusa-san's steering
 
 ma.reconstructDecay(decayString="J/psi:den -> e+:loosecor e-:loosecor",
-                    cut="2.9 < M < 4.0",
+                    cut="2.9 < M < 3.2",
                     path=mypath)
+
+ma.reconstructDecay(decayString="psi(2S):den -> e+:loosecor e-:loosecor", cut="3.5 < M < 3.8", path=mypath)
 
 chiProb=["chiProb"]
 EoP=['clusterEoP']
@@ -60,10 +64,22 @@ ma.variablesToNtuple(decayString="J/psi:gen",
                   filename=rootOutputFile,
                   path=mypath)
 
+ma.variablesToNtuple(decayString="psi(2S):gen",
+		  variables=psi2s_vars,
+		  treename="psi(2S)(mumu)",
+		  filename=rootOutputFile,
+		  path=mypath)
+
 ma.variablesToNtuple(decayString="J/psi:den",
                   variables=psi2s_vars,
                   treename="J/psi(ee)",
                   filename=rootOutputFile,
+                  path=mypath)
+
+ma.variablesToNtuple(decayString="psi(2S):den",
+		  variables=psi2s_vars,
+		  treename="psi(2S)(ee)",
+	   	  filename=rootOutputFile,
                   path=mypath)
 
 ####################################################################
