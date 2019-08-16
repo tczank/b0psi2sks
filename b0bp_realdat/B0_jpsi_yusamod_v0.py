@@ -261,19 +261,19 @@ Bpm_vars = vc.kinematics + \
 rootOutputFile = os.environ['OUTPUT']
 
 ma.variablesToNtuple('B0:jpsi_eeks', B0e_vars,
-                     filename=output_file,
+                     filename=rootOutputFile,
                      treename='b0e',
                      path=mypath)
 ma.variablesToNtuple('B0:jpsi_mumuks', B0m_vars,
-                     filename=output_file,
+                     filename=rootOutputFile,
                      treename='b0m',
                      path=mypath)
 ma.variablesToNtuple('B+:jpsi_eekp', Bpe_vars,
-                     filename=output_file,
+                     filename=rootOutputFile,
                      treename='bpe',
                      path=mypath)
 ma.variablesToNtuple('B+:jpsi_mumukp', Bpm_vars,
-                     filename=output_file,
+                     filename=rootOutputFile,
                      treename='bpm',
                      path=mypath)
 
