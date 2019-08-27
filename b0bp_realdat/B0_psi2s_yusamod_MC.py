@@ -60,8 +60,8 @@ ma.looseMCTruth(list_name='e+:corrected',
                 path=mypath)
 
 ## reconstruct J/psi -> e+ e- decay
-ma.reconstructDecay('J/psi:ee -> e+:corrected e-:corrected', '2.8 < M < 3.2 and nTracks > 4 and useCMSFrame(p) < 2. and isSignal=1', path=mypath)
-ma.reconstructDecay('J/psi:mumu -> mu+:good mu-:good', '2.8 < M < 3.2 and nTracks > 4 and useCMSFrame(p) < 2. and isSignal=1', path=mypath)
+ma.reconstructDecay('J/psi:ee -> e+:corrected e-:corrected', '2.8 < M < 3.2 and nTracks > 4 and useCMSFrame(p) < 2. ', path=mypath)
+ma.reconstructDecay('J/psi:mumu -> mu+:good mu-:good', '2.8 < M < 3.2 and nTracks > 4 and useCMSFrame(p) < 2. ', path=mypath)
 
 #vx.vertexRave('J/psi:ee', 0., 'J/psi:ee -> ^e+ ^e-', 'ipprofile', path=mypath)
 #vx.vertexRave('J/psi:mumu', 0., 'J/psi:mumu -> ^mu+ ^mu-', 'ipprofile', path=mypath)
@@ -79,11 +79,11 @@ ma.fillParticleList(decayString='pi+:good',cut='chiProb > 0.001 and pionID > 0.1
 ma.fillParticleList(decayString='K+:good',cut='chiProb > 0.001 and kaonID > 0.1',path=mypath)
 
 ##psi(2S) reconstruction
-ma.reconstructDecay(decayString='psi(2S):ee -> J/psi:ee pi+:good pi-:good', cut="3.5 < M < 3.8", path=mypath)
+ma.reconstructDecay(decayString='psi(2S):ee -> J/psi:ee pi+:good pi-:good', cut="3.5 < M < 3.8 ", path=mypath)
 
 ma.V0ListMerger("J/psi:mumu","J/psi:ee",1,path=mypath)
 
-ma.reconstructDecay(decayString='psi(2S):mumu -> J/psi:mumu pi+:good pi-:good', cut="3.5 < M < 3.8", path=mypath)
+ma.reconstructDecay(decayString='psi(2S):mumu -> J/psi:mumu pi+:good pi-:good', cut="3.5 < M < 3.8 ", path=mypath)
 
 
 #ma.rankByHighest('K+:good',   'kaonID',numBest=3, outputVariable='k_rank', path=mypath)
@@ -99,7 +99,7 @@ ma.reconstructDecay(decayString='psi(2S):mumu -> J/psi:mumu pi+:good pi-:good', 
 # keep only candidates with dM<0.25
 ##ma.reconstructDecay('K_S0:pipi -> pi+:good pi-:good', 'dM<0.25', path=mypath)
 
-ma.fillParticleList(decayString='K_S0:pipi -> pi+:good pi-:good', cut='0.3 < M < 0.7 and isSignal=1', path=mypath)
+ma.fillParticleList(decayString='K_S0:pipi -> pi+:good pi-:good', cut='0.3 < M < 0.7 ', path=mypath)
 ma.vertexKFit(list_name='K_S0:pipi', conf_level=0.0, path=mypath)
 
 #vx.vertexRave('K_S0:pipi', 0., 'K_S0:pipi -> ^pi+:good ^pi-:good', '', path=mypath)
@@ -109,13 +109,13 @@ ma.vertexKFit(list_name='K_S0:pipi', conf_level=0.0, path=mypath)
 
 # reconstruct B0 -> psi(2S) Ks decay
 # keep only candidates with Mbc > 5.1 and abs(deltaE)<0.25
-ma.reconstructDecay('B0:psi2s_eeks -> psi(2S):ee K_S0:pipi', 'Mbc > 5.2 and abs(deltaE)<0.15 and isSignal = 1', path=mypath)
-ma.reconstructDecay('B0:psi2s_mumuks -> psi(2S):mumu K_S0:pipi', 'Mbc > 5.2 and abs(deltaE)<0.15 and isSignal = 1', path=mypath)
+ma.reconstructDecay('B0:psi2s_eeks -> psi(2S):ee K_S0:pipi', 'Mbc > 5.2 and abs(deltaE)<0.15 ', path=mypath)
+ma.reconstructDecay('B0:psi2s_mumuks -> psi(2S):mumu K_S0:pipi', 'Mbc > 5.2 and abs(deltaE)<0.15 ', path=mypath)
 
 # reconstruct B+ -> psi(2S) K+ decay
 # keep only candidates with Mbc > 5.1 and abs(deltaE)<0.5
-ma.reconstructDecay('B+:psi2s_eekp -> psi(2S):ee K+:good', 'Mbc > 5.2 and abs(deltaE)<0.15 and isSignal = 1', path=mypath)
-ma.reconstructDecay('B+:psi2s_mumukp -> psi(2S):mumu K+:good', 'Mbc > 5.2 and abs(deltaE)<0.15 and isSignal = 1', path=mypath)
+ma.reconstructDecay('B+:psi2s_eekp -> psi(2S):ee K+:good', 'Mbc > 5.2 and abs(deltaE) < 0.15 ', path=mypath)
+ma.reconstructDecay('B+:psi2s_mumukp -> psi(2S):mumu K+:good', 'Mbc > 5.2 and abs(deltaE)< 0.15 ', path=mypath)
 
 
 # perform MC matching (MC truth asociation)
