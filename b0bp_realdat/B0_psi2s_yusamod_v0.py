@@ -259,7 +259,7 @@ B0den_vars = vc.kinematics + \
     list_of_variables=vc.kinematics + cms_kinematics + vc.inv_mass + vc.mc_truth + vc.mc_kinematics,
                decay_string='B0:psi2s_denks -> ^psi(2S):den ^K_S0:pipi') + \
     vu.create_aliases_for_selected(
-        list_of_variables=vc.kinematics + cms_kinematics + vc.inv_mass +  vc.pid + my_cluster + vc.track + vc.track_hits,
+        list_of_variables=vc.kinematics + cms_kinematics + vc.pid + my_cluster + vc.track + vc.track_hits,
         decay_string='B0:psi2s_denks -> [^psi(2S):den -> [^e+:corrected -> ^e+:uncorrected gamma:all] [^e-:corrected -> ^e-:uncorrected gamma:all]] [K_S0:pipi -> ^pi+ ^pi-]')
 
 B0m_vars = vc.kinematics + \
@@ -295,7 +295,7 @@ B0gen_vars = vc.kinematics + \
     list_of_variables=vc.kinematics  + cms_kinematics + vc.inv_mass + vc.mc_truth + vc.mc_kinematics,
                decay_string='B0:psi2s_genks -> ^psi(2S):gen ^K_S0:pipi') + \
     vu.create_aliases_for_selected(
-        list_of_variables=vc.kinematics + cms_kinematics + vc.inv_mass + vc.pid + my_cluster + vc.track + vc.track_hits,
+        list_of_variables=vc.kinematics + cms_kinematics + vc.pid + my_cluster + vc.track + vc.track_hits,
         decay_string='B0:psi2s_genks -> [psi(2S):gen -> ^mu+ ^mu-]  [K_S0:pipi -> ^pi+ ^pi-]')
 
 Bpe_vars = vc.kinematics + \
@@ -311,10 +311,10 @@ Bpe_vars = vc.kinematics + \
            vc.mc_tag_vertex + \
            vu.create_aliases_for_selected(
     list_of_variables=vc.kinematics + cms_kinematics + vc.inv_mass + vc.mc_truth + vc.mc_kinematics,
-               decay_string='B+:psi2s_eekp -> ^psi(2S):ee K+:good') + \
+               decay_string='B+:psi2s_eekp -> ^psi(2S):ee ^K+:good') + \
     vu.create_aliases_for_selected(
         list_of_variables=vc.kinematics + cms_kinematics + vc.inv_mass + vc.pid + my_cluster + vc.track + vc.track_hits + rank,
-        decay_string='B+:psi2s_eekp -> [psi(2S):ee -> [^J/psi:ee -> [^e+:corrected -> ^e+:uncorrected gamma:all] [^e-:corrected -> ^e-:uncorrected gamma:all]] pi+:good pi-:good] ^K+:good')
+        decay_string='B+:psi2s_eekp -> [psi(2S):ee -> [^J/psi:ee -> [^e+:corrected -> ^e+:uncorrected gamma:all] [^e-:corrected -> ^e-:uncorrected gamma:all]] pi+:good pi-:good] K+:good')
 
 Bpden_vars = vc.kinematics + \
            cms_kinematics +\
@@ -329,10 +329,10 @@ Bpden_vars = vc.kinematics + \
            vc.mc_tag_vertex + \
            vu.create_aliases_for_selected(
     list_of_variables=vc.kinematics + cms_kinematics + vc.inv_mass + vc.mc_truth + vc.mc_kinematics,
-               decay_string='B+:psi2s_denkp -> ^psi(2S):den K+:good') + \
+               decay_string='B+:psi2s_denkp -> ^psi(2S):den ^K+:good') + \
     vu.create_aliases_for_selected(
-        list_of_variables=vc.kinematics + cms_kinematics + vc.inv_mass + vc.pid + my_cluster + vc.track + vc.track_hits + rank,
-        decay_string='B+:psi2s_eekp -> [psi(2S):den -> [^e+:corrected -> ^e+:uncorrected gamma:all] [^e-:corrected -> ^e-:uncorrected gamma:all]] ^K+:good')
+        list_of_variables=vc.kinematics + cms_kinematics + vc.pid + my_cluster + vc.track + vc.track_hits + rank,
+        decay_string='B+:psi2s_eekp -> [psi(2S):den -> [^e+:corrected -> ^e+:uncorrected gamma:all] [^e-:corrected -> ^e-:uncorrected gamma:all]] K+:good')
 
 Bpm_vars = vc.kinematics + \
            cms_kinematics +\
@@ -347,10 +347,10 @@ Bpm_vars = vc.kinematics + \
            vc.mc_tag_vertex + \
     vu.create_aliases_for_selected(
     list_of_variables=vc.kinematics + cms_kinematics + vc.inv_mass + vc.mc_truth + vc.mc_kinematics,
-        decay_string='B+:psi2s_mumukp -> ^psi(2S):mumu K+:good') + \
+        decay_string='B+:psi2s_mumukp -> ^psi(2S):mumu ^K+:good') + \
     vu.create_aliases_for_selected(
         list_of_variables=vc.kinematics + cms_kinematics + vc.inv_mass + vc.pid + my_cluster + vc.track + vc.track_hits + rank,
-        decay_string='B+:psi2s_mumukp -> [psi(2S):mumu -> [^J/psi:mumu -> ^mu+ ^mu-] pi+:good pi-:good]  ^K+:good')
+        decay_string='B+:psi2s_mumukp -> [psi(2S):mumu -> [^J/psi:mumu -> ^mu+ ^mu-] pi+:good pi-:good]  K+:good')
 
 Bpgen_vars = vc.kinematics + \
            cms_kinematics +\
@@ -365,10 +365,10 @@ Bpgen_vars = vc.kinematics + \
            vc.mc_tag_vertex + \
     vu.create_aliases_for_selected(
     list_of_variables=vc.kinematics + cms_kinematics + vc.inv_mass + vc.mc_truth + vc.mc_kinematics,
-        decay_string='B+:psi2s_genkp -> ^psi(2S):gen K+:good') + \
+        decay_string='B+:psi2s_genkp -> ^psi(2S):gen ^K+:good') + \
     vu.create_aliases_for_selected(
-        list_of_variables=vc.kinematics + cms_kinematics + vc.inv_mass + vc.pid + my_cluster + vc.track + vc.track_hits + rank,
-        decay_string='B+:psi2s_genkp -> [psi(2S):gen -> ^mu+ ^mu-]  ^K+:good')
+        list_of_variables=vc.kinematics + cms_kinematics + vc.pid + my_cluster + vc.track + vc.track_hits + rank,
+        decay_string='B+:psi2s_genkp -> [psi(2S):gen -> ^mu+ ^mu-]  K+:good')
 
 rootOutputFile = os.environ['OUTPUT']
 
