@@ -17,7 +17,7 @@ mypath = b2.create_path() # create your own path (call it what you like)
 import sys
 import os
 
-#b2.use_central_database("data_reprocessing_proc9")
+b2.use_central_database("data_reprocessing_proc9")
 
 ma.inputMdst(environmentType='default', filename=os.environ['FILENAME'], path=mypath)
 
@@ -45,8 +45,8 @@ ma.fillParticleList(decayString='gamma:all',
                     path=mypath)
 
 # loose mc matching (recommended)
-ma.looseMCTruth(list_name='e+:uncorrected', path=mypath)
-ma.looseMCTruth(list_name='gamma:all', path=mypath)
+#ma.looseMCTruth(list_name='e+:uncorrected', path=mypath)
+#ma.looseMCTruth(list_name='gamma:all', path=mypath)
 
 # fsr correction
 ma.correctFSR(outputListName='e+:corrected',
@@ -56,12 +56,12 @@ ma.correctFSR(outputListName='e+:corrected',
               energyThreshold=1.0,
               writeOut=False,
               path=mypath)
-ma.looseMCTruth(list_name='e+:corrected',
-                path=mypath)
+#ma.looseMCTruth(list_name='e+:corrected',
+#                path=mypath)
 
 ## reconstruct J/psi -> e+ e- decay
-ma.reconstructDecay('J/psi:ee -> e+:corrected e-:corrected', '2.8 < M < 3.2 and nTracks > 4 and useCMSFrame(p) < 2. ', path=mypath)
-ma.reconstructDecay('J/psi:mumu -> mu+:good mu-:good', '2.8 < M < 3.2 and nTracks > 4 and useCMSFrame(p) < 2. ', path=mypath)
+ma.reconstructDecay('J/psi:ee -> e+:corrected e-:corrected', '2.8 < M < 3.2 and nTracks > 4 and useCMSFrame(p) < 2.', path=mypath)
+ma.reconstructDecay('J/psi:mumu -> mu+:good mu-:good', '2.8 < M < 3.2 and nTracks > 4 and useCMSFrame(p) < 2.', path=mypath)
 
 #vx.vertexRave('J/psi:ee', 0., 'J/psi:ee -> ^e+ ^e-', 'ipprofile', path=mypath)
 #vx.vertexRave('J/psi:mumu', 0., 'J/psi:mumu -> ^mu+ ^mu-', 'ipprofile', path=mypath)
@@ -69,8 +69,8 @@ ma.reconstructDecay('J/psi:mumu -> mu+:good mu-:good', '2.8 < M < 3.2 and nTrack
 #ma.rankByHighest('J/psi:mumu', 'chiProb',numBest=3, outputVariable='jpsi_rank', path=mypath)
 #ma.variables.addAlias('jpsi_rank', 'extraInfo(jpsi_rank)')
 
-ma.looseMCTruth(list_name='J/psi:ee', path=mypath)
-ma.looseMCTruth(list_name='J/psi:mumu', path=mypath)
+#ma.looseMCTruth(list_name='J/psi:ee', path=mypath)
+#ma.looseMCTruth(list_name='J/psi:mumu', path=mypath)
 
 
 #sc.stdPi('good')
@@ -79,20 +79,14 @@ ma.fillParticleList(decayString='pi+:good',cut='chiProb > 0.001 and pionID > 0.1
 ma.fillParticleList(decayString='K+:good',cut='chiProb > 0.001 and kaonID > 0.1',path=mypath)
 
 ##psi(2S) reconstruction
-ma.reconstructDecay(decayString='psi(2S):ee -> J/psi:ee pi+:good pi-:good', cut="3.5 < M < 3.8 ", path=mypath)
+ma.reconstructDecay(decayString='psi(2S):ee -> J/psi:ee pi+:good pi-:good', cut="3.6 < M < 3.8", path=mypath)
 
 ma.reconstructDecay(decayString='psi(2S):den -> e+:corrected e-:corrected', cut="3.6 < M < 3.8 and nTracks > 4 and useCMSFrame(p) < 3.", path=mypath)
-
 ma.reconstructDecay(decayString='psi(2S):gen -> mu+:good mu-:good', cut="3.6 < M < 3.8 and nTracks > 4 and useCMSFrame(p) < 3.", path=mypath)
 
 ma.V0ListMerger("J/psi:mumu","J/psi:ee",1,path=mypath)
 
-ma.reconstructDecay(decayString='psi(2S):mumu -> J/psi:mumu pi+:good pi-:good', cut="3.5 < M < 3.8 ", path=mypath)
-
-ma.matchMCTruth('psi(2S):ee', path=mypath)
-ma.matchMCTruth('psi(2S):gen', path=mypath)
-ma.matchMCTruth('psi(2S):den', path=mypath)
-ma.matchMCTruth('psi(2S):mumu', path=mypath)
+ma.reconstructDecay(decayString='psi(2S):mumu -> J/psi:mumu pi+:good pi-:good', cut="3.6 < M < 3.8", path=mypath)
 
 #ma.rankByHighest('K+:good',   'kaonID',numBest=3, outputVariable='k_rank', path=mypath)
 #ma.variables.addAlias('k_rank', 'extraInfo(k_rank)')
@@ -107,7 +101,7 @@ ma.matchMCTruth('psi(2S):mumu', path=mypath)
 # keep only candidates with dM<0.25
 ##ma.reconstructDecay('K_S0:pipi -> pi+:good pi-:good', 'dM<0.25', path=mypath)
 
-ma.fillParticleList(decayString='K_S0:pipi -> pi+:good pi-:good', cut='0.3 < M < 0.7 ', path=mypath)
+ma.fillParticleList(decayString='K_S0:pipi -> pi+:good pi-:good', cut='0.3 < M < 0.7', path=mypath)
 ma.vertexKFit(list_name='K_S0:pipi', conf_level=0.0, path=mypath)
 
 #vx.vertexRave('K_S0:pipi', 0., 'K_S0:pipi -> ^pi+:good ^pi-:good', '', path=mypath)
@@ -117,28 +111,23 @@ ma.vertexKFit(list_name='K_S0:pipi', conf_level=0.0, path=mypath)
 
 # reconstruct B0 -> psi(2S) Ks decay
 # keep only candidates with Mbc > 5.1 and abs(deltaE)<0.25
-ma.reconstructDecay('B0:psi2s_eeks -> psi(2S):ee K_S0:pipi', 'Mbc > 5.2 and abs(deltaE)<0.15 ', path=mypath)
-ma.reconstructDecay('B0:psi2s_mumuks -> psi(2S):mumu K_S0:pipi', 'Mbc > 5.2 and abs(deltaE)<0.15 ', path=mypath)
+ma.reconstructDecay('B0:psi2s_eeks -> psi(2S):ee K_S0:pipi', 'Mbc > 5.2 and abs(deltaE)<0.15', path=mypath)
+ma.reconstructDecay('B0:psi2s_mumuks -> psi(2S):mumu K_S0:pipi', 'Mbc > 5.2 and abs(deltaE)<0.15', path=mypath)
 ma.reconstructDecay('B0:psi2s_denks -> psi(2S):den K_S0:pipi', 'Mbc > 5.2 and abs(deltaE)<0.15', path=mypath)
 ma.reconstructDecay('B0:psi2s_genks -> psi(2S):gen K_S0:pipi', 'Mbc > 5.2 and abs(deltaE)<0.15', path=mypath)
 
 # reconstruct B+ -> psi(2S) K+ decay
 # keep only candidates with Mbc > 5.1 and abs(deltaE)<0.5
-ma.reconstructDecay('B+:psi2s_eekp -> psi(2S):ee K+:good', 'Mbc > 5.2 and abs(deltaE) < 0.15 ', path=mypath)
-ma.reconstructDecay('B+:psi2s_mumukp -> psi(2S):mumu K+:good', 'Mbc > 5.2 and abs(deltaE)< 0.15 ', path=mypath)
+ma.reconstructDecay('B+:psi2s_eekp -> psi(2S):ee K+:good', 'Mbc > 5.2 and abs(deltaE)<0.15', path=mypath)
+ma.reconstructDecay('B+:psi2s_mumukp -> psi(2S):mumu K+:good', 'Mbc > 5.2 and abs(deltaE)<0.15', path=mypath)
 ma.reconstructDecay('B+:psi2s_denkp -> psi(2S):den K+:good', 'Mbc > 5.2 and abs(deltaE)<0.15', path=mypath)
 ma.reconstructDecay('B+:psi2s_genkp -> psi(2S):gen K+:good', 'Mbc > 5.2 and abs(deltaE)<0.15', path=mypath)
 
 # perform MC matching (MC truth asociation)
-ma.matchMCTruth('B0:psi2s_eeks', path=mypath)
-ma.matchMCTruth('B0:psi2s_mumuks', path=mypath)
-ma.matchMCTruth('B0:psi2s_denks', path=mypath)
-ma.matchMCTruth('B0:psi2s_genks', path=mypath)
-
-ma.matchMCTruth('B+:psi2s_eekp', path=mypath)
-ma.matchMCTruth('B+:psi2s_mumukp', path=mypath)
-ma.matchMCTruth('B+:psi2s_denkp', path=mypath)
-ma.matchMCTruth('B+:psi2s_genkp', path=mypath)
+#ma.matchMCTruth('B0:psi2s_eeks', path=mypath)
+#ma.matchMCTruth('B0:psi2s_mumuks', path=mypath)
+#ma.matchMCTruth('B+:psi2s_eekp', path=mypath)
+#ma.matchMCTruth('B+:psi2s_mumukp', path=mypath)
 
 # Fit the B0 Vertex
 vx.vertexRave('B0:psi2s_eeks', 0., 'B0 -> [psi(2S):ee -> [J/psi:ee -> ^e+ ^e-] ^pi+ ^pi-] K_S0:pipi', '', path=mypath)
@@ -147,7 +136,7 @@ vx.vertexRave('B0:psi2s_denks', 0., 'B0 -> [psi(2S):den -> ^e+ ^e-] K_S0:pipi', 
 vx.vertexRave('B0:psi2s_genks', 0., 'B0 -> [psi(2S):gen -> ^mu+ ^mu-] K_S0:pipi','', path=mypath)
 
 vx.vertexRave('B+:psi2s_eekp', 0., 'B+ -> [psi(2S):ee -> [J/psi:ee -> ^e+ ^e-] ^pi+ ^pi-] K+:good', '', path=mypath)
-vx.vertexRave('B+:psi2s_mumukp', 0., 'B+ -> [psi(2S) -> [J/psi:mumu -> ^mu+ ^mu-] ^pi+ ^pi-] K+:good', '', path=mypath)
+vx.vertexRave('B+:psi2s_mumukp', 0., 'B+ -> [psi(2S):mumu -> [J/psi:mumu -> ^mu+ ^mu-] ^pi+ ^pi-] K+:good', '', path=mypath)
 vx.vertexRave('B+:psi2s_denkp', 0., 'B+ -> [psi(2S):den -> ^e+ ^e-]  K+:good', '', path=mypath)
 vx.vertexRave('B+:psi2s_genkp', 0., 'B+ -> [psi(2S):mumu -> ^mu+ ^mu-] K+:good', '', path=mypath)
 
@@ -252,7 +241,7 @@ B0e_vars = vc.kinematics + \
     list_of_variables=vc.kinematics + cms_kinematics + vc.inv_mass + vc.mc_truth + vc.mc_kinematics,
                decay_string='B0:psi2s_eeks -> ^psi(2S):ee ^K_S0:pipi') + \
     vu.create_aliases_for_selected(
-        list_of_variables=vc.kinematics + cms_kinematics + vc.inv_mass + vc.pid + my_cluster + vc.track + vc.track_hits,
+        list_of_variables=vc.kinematics + cms_kinematics + vc.inv_mass +  vc.pid + my_cluster + vc.track + vc.track_hits,
         decay_string='B0:psi2s_eeks -> [psi(2S):ee -> [^J/psi:ee -> [^e+:corrected -> ^e+:uncorrected gamma:all] [^e-:corrected -> ^e-:uncorrected gamma:all]] ^pi+:good ^pi-:good] [K_S0:pipi -> ^pi+ ^pi-]')
 
 B0den_vars = vc.kinematics + \
@@ -270,8 +259,8 @@ B0den_vars = vc.kinematics + \
     list_of_variables=vc.kinematics + cms_kinematics + vc.inv_mass + vc.mc_truth + vc.mc_kinematics,
                decay_string='B0:psi2s_denks -> ^psi(2S):den ^K_S0:pipi') + \
     vu.create_aliases_for_selected(
-        list_of_variables=vc.kinematics + cms_kinematics +  vc.pid + my_cluster + vc.track + vc.track_hits,
-        decay_string='B0:psi2s_denks -> [psi(2S):den -> [^e+:corrected -> ^e+:uncorrected gamma:all] [^e-:corrected -> ^e-:uncorrected gamma:all]] [K_S0:pipi -> ^pi+ ^pi-]')
+        list_of_variables=vc.kinematics + cms_kinematics + vc.inv_mass +  vc.pid + my_cluster + vc.track + vc.track_hits,
+        decay_string='B0:psi2s_denks -> [^psi(2S):den -> [^e+:corrected -> ^e+:uncorrected gamma:all] [^e-:corrected -> ^e-:uncorrected gamma:all]] [K_S0:pipi -> ^pi+ ^pi-]')
 
 B0m_vars = vc.kinematics + \
            cms_kinematics +\
@@ -289,7 +278,7 @@ B0m_vars = vc.kinematics + \
                decay_string='B0:psi2s_mumuks -> ^psi(2S):mumu ^K_S0:pipi') + \
     vu.create_aliases_for_selected(
         list_of_variables=vc.kinematics + cms_kinematics + vc.inv_mass + vc.pid + my_cluster + vc.track + vc.track_hits,
-        decay_string='B0:psi2s_mumuks -> [psi(2S):mumu -> [^J/psi:mumu -> ^mu+ ^mu-] ^pi+:good ^pi-:good] [K_S0:pipi -> ^pi+ ^pi-]')
+        decay_string='B0:psi2s_mumuks -> [^psi(2S):mumu -> [^J/psi:mumu -> ^mu+ ^mu-] ^pi+:good ^pi-:good] [K_S0:pipi -> ^pi+ ^pi-]')
 
 B0gen_vars = vc.kinematics + \
            cms_kinematics +\
@@ -306,7 +295,7 @@ B0gen_vars = vc.kinematics + \
     list_of_variables=vc.kinematics  + cms_kinematics + vc.inv_mass + vc.mc_truth + vc.mc_kinematics,
                decay_string='B0:psi2s_genks -> ^psi(2S):gen ^K_S0:pipi') + \
     vu.create_aliases_for_selected(
-        list_of_variables=vc.kinematics + cms_kinematics +  vc.pid + my_cluster + vc.track + vc.track_hits,
+        list_of_variables=vc.kinematics + cms_kinematics + vc.inv_mass + vc.pid + my_cluster + vc.track + vc.track_hits,
         decay_string='B0:psi2s_genks -> [psi(2S):gen -> ^mu+ ^mu-]  [K_S0:pipi -> ^pi+ ^pi-]')
 
 Bpe_vars = vc.kinematics + \
@@ -322,10 +311,10 @@ Bpe_vars = vc.kinematics + \
            vc.mc_tag_vertex + \
            vu.create_aliases_for_selected(
     list_of_variables=vc.kinematics + cms_kinematics + vc.inv_mass + vc.mc_truth + vc.mc_kinematics,
-               decay_string='B+:psi2s_eekp -> ^psi(2S):ee ^K+:good') + \
+               decay_string='B+:psi2s_eekp -> ^psi(2S):ee K+:good') + \
     vu.create_aliases_for_selected(
-        list_of_variables=vc.kinematics + cms_kinematics + vc.pid + vc.inv_mass + my_cluster + vc.track + vc.track_hits + rank,
-        decay_string='B+:psi2s_eekp -> [psi(2S):ee -> [^J/psi:ee -> [^e+:corrected -> ^e+:uncorrected gamma:all] [^e-:corrected -> ^e-:uncorrected gamma:all]] pi+:good pi-:good] K+:good')
+        list_of_variables=vc.kinematics + cms_kinematics + vc.inv_mass + vc.pid + my_cluster + vc.track + vc.track_hits + rank,
+        decay_string='B+:psi2s_eekp -> [psi(2S):ee -> [^J/psi:ee -> [^e+:corrected -> ^e+:uncorrected gamma:all] [^e-:corrected -> ^e-:uncorrected gamma:all]] pi+:good pi-:good] ^K+:good')
 
 Bpden_vars = vc.kinematics + \
            cms_kinematics +\
@@ -340,10 +329,10 @@ Bpden_vars = vc.kinematics + \
            vc.mc_tag_vertex + \
            vu.create_aliases_for_selected(
     list_of_variables=vc.kinematics + cms_kinematics + vc.inv_mass + vc.mc_truth + vc.mc_kinematics,
-               decay_string='B+:psi2s_denkp -> ^psi(2S):den ^K+:good') + \
+               decay_string='B+:psi2s_denkp -> ^psi(2S):den K+:good') + \
     vu.create_aliases_for_selected(
-        list_of_variables=vc.kinematics + cms_kinematics + vc.pid + my_cluster + vc.track + vc.track_hits + rank,
-        decay_string='B+:psi2s_eekp -> [psi(2S):den -> [^e+:corrected -> ^e+:uncorrected gamma:all] [^e-:corrected -> ^e-:uncorrected gamma:all]] K+:good')
+        list_of_variables=vc.kinematics + cms_kinematics + vc.inv_mass + vc.pid + my_cluster + vc.track + vc.track_hits + rank,
+        decay_string='B+:psi2s_eekp -> [psi(2S):den -> [^e+:corrected -> ^e+:uncorrected gamma:all] [^e-:corrected -> ^e-:uncorrected gamma:all]] ^K+:good')
 
 Bpm_vars = vc.kinematics + \
            cms_kinematics +\
@@ -358,10 +347,10 @@ Bpm_vars = vc.kinematics + \
            vc.mc_tag_vertex + \
     vu.create_aliases_for_selected(
     list_of_variables=vc.kinematics + cms_kinematics + vc.inv_mass + vc.mc_truth + vc.mc_kinematics,
-        decay_string='B+:psi2s_mumukp -> ^psi(2S):mumu ^K+:good') + \
+        decay_string='B+:psi2s_mumukp -> ^psi(2S):mumu K+:good') + \
     vu.create_aliases_for_selected(
-        list_of_variables=vc.kinematics + cms_kinematics + vc.pid + vc.inv_mass + my_cluster + vc.track + vc.track_hits + rank,
-        decay_string='B+:psi2s_mumukp -> [psi(2S):mumu -> [^J/psi:mumu -> ^mu+ ^mu-] pi+:good pi-:good]  K+:good')
+        list_of_variables=vc.kinematics + cms_kinematics + vc.inv_mass + vc.pid + my_cluster + vc.track + vc.track_hits + rank,
+        decay_string='B+:psi2s_mumukp -> [psi(2S):mumu -> [^J/psi:mumu -> ^mu+ ^mu-] pi+:good pi-:good]  ^K+:good')
 
 Bpgen_vars = vc.kinematics + \
            cms_kinematics +\
@@ -376,12 +365,11 @@ Bpgen_vars = vc.kinematics + \
            vc.mc_tag_vertex + \
     vu.create_aliases_for_selected(
     list_of_variables=vc.kinematics + cms_kinematics + vc.inv_mass + vc.mc_truth + vc.mc_kinematics,
-        decay_string='B+:psi2s_genkp -> ^psi(2S):gen ^K+:good') + \
+        decay_string='B+:psi2s_genkp -> ^psi(2S):gen K+:good') + \
     vu.create_aliases_for_selected(
-        list_of_variables=vc.kinematics + cms_kinematics + vc.pid + my_cluster + vc.track + vc.track_hits + rank,
-        decay_string='B+:psi2s_genkp -> [psi(2S):gen -> ^mu+ ^mu-]  K+:good')
+        list_of_variables=vc.kinematics + cms_kinematics + vc.inv_mass + vc.pid + my_cluster + vc.track + vc.track_hits + rank,
+        decay_string='B+:psi2s_genkp -> [psi(2S):gen -> ^mu+ ^mu-]  ^K+:good')
 
-################### Saving variables to ntuple ##############################
 rootOutputFile = os.environ['OUTPUT']
 
 ma.variablesToNtuple('B0:psi2s_eeks', B0e_vars,
@@ -392,11 +380,11 @@ ma.variablesToNtuple('B0:psi2s_mumuks', B0m_vars,
                      filename=rootOutputFile,
                      treename='b0m',
                      path=mypath)
-ma.variablesToNtuple('B0:psi2s_denks', B0e_vars,
+ma.variablesToNtuple('B0:psi2s_denks', B0den_vars,
                      filename=rootOutputFile,
                      treename='b0den',
                      path=mypath)
-ma.variablesToNtuple('B0:psi2s_genks', B0m_vars,
+ma.variablesToNtuple('B0:psi2s_genks', B0gen_vars,
                      filename=rootOutputFile,
                      treename='b0gen',
                      path=mypath)
@@ -408,15 +396,89 @@ ma.variablesToNtuple('B+:psi2s_mumukp', Bpm_vars,
                      filename=rootOutputFile,
                      treename='bpm',
                      path=mypath)
-ma.variablesToNtuple('B+:psi2s_denkp', Bpe_vars,
+ma.variablesToNtuple('B+:psi2s_denkp', Bpden_vars,
                      filename=rootOutputFile,
                      treename='bpden',
                      path=mypath)
-ma.variablesToNtuple('B+:psi2s_genkp', Bpm_vars,
+ma.variablesToNtuple('B+:psi2s_genkp', Bpgen_vars,
                      filename=rootOutputFile,
                      treename='bpgen',
                      path=mypath)
 
+## create and fill flat Ntuple with MCTruth and kinematic information
+##ma.toolsDST_ee = ['EventMetaData', '^B0:jpsi_eeks']
+##ma.toolsDST_ee += ['InvMass[BeforeFit]', 'B0:jpsi_eeks -> ^J/psi:ee K_S0:pipi']
+##ma.toolsDST_ee += ['CMSKinematics', 'B0:jpsi_eeks -> ^J/psi:ee ^K_S0:pipi']
+##ma.toolsDST_ee += ['RecoStats', '^B0:jpsi_eeks']
+##ma.toolsDST_ee += ['DeltaEMbc', '^B0:jpsi_eeks']
+##ma.toolsDST_ee += ['Vertex', '^B0:jpsi_eeks']
+##ma.toolsDST_ee += ['MCVertex', '^B0:jpsi_eeks']
+##ma.toolsDST_ee += ['TagVertex', '^B0:jpsi_eeks']
+##ma.toolsDST_ee += ['PID', 'B0:jpsi_eeks -> [J/psi:ee -> ^e+ ^e-] [K_S0:pipi -> ^pi+ ^pi-]']
+##ma.toolsDST_ee += ['Track', 'B0:jpsi_eeks -> [J/psi:ee -> ^e+ ^e-] [K_S0:pipi -> ^pi+ ^pi-]']
+##ma.toolsDST_ee += ['MCTruth', '^B0:jpsi_eeks -> [^J/psi:ee -> ^e+ ^e-] [^K_S0:pipi -> ^pi+ ^pi-]']
+##ma.toolsDST_ee += ['TagVertex', '^B0:jpsi_eeks']
+##ma.toolsDST_ee += ['DeltaT', '^B0:jpsi_eeks']
+##ma.toolsDST_ee += ['MCTagVertex', '^B0:jpsi_eeks']
+##ma.toolsDST_ee += ['MCDeltaT', '^B0:jpsi_eeks']
+##ma.toolsDST_ee += ['CustomFloats[d0]', 'B0:jpsi_eeks -> [J/psi:ee -> ^e+ ^e-] [K_S0:pipi -> ^pi+ ^pi-]']
+##ma.toolsDST_ee += ['CustomFloats[d0Err]', 'B0:jpsi_eeks -> [J/psi:ee -> ^e+ ^e-] [K_S0:pipi -> ^pi+ ^pi-]']
+##ma.toolsDST_ee += ['CustomFloats[omega]', 'B0:jpsi_eeks -> [J/psi:ee -> ^e+ ^e-] [K_S0:pipi -> ^pi+ ^pi-]']
+##ma.toolsDST_ee += ['CustomFloats[omegaErr]', 'B0:jpsi_eeks -> [J/psi:ee -> ^e+ ^e-] [K_S0:pipi -> ^pi+ ^pi-]']
+##ma.toolsDST_ee += ['CustomFloats[phi0]', 'B0:jpsi_eeks -> [J/psi:ee -> ^e+ ^e-] [K_S0:pipi -> ^pi+ ^pi-]']
+##ma.toolsDST_ee += ['CustomFloats[phi0Err]', 'B0:jpsi_eeks -> [J/psi:ee -> ^e+ ^e-] [K_S0:pipi -> ^pi+ ^pi-]']
+##ma.toolsDST_ee += ['CustomFloats[tanlambda]', 'B0:jpsi_eeks -> [J/psi:ee -> ^e+ ^e-] [K_S0:pipi -> ^pi+ ^pi-]']
+##ma.toolsDST_ee += ['CustomFloats[tanlambdaErr]', 'B0:jpsi_eeks -> [J/psi:ee -> ^e+ ^e-] [K_S0:pipi -> ^pi+ ^pi-]']
+##ma.toolsDST_ee += ['CustomFloats[z0]', 'B0:jpsi_eeks -> [J/psi:ee -> ^e+ ^e-] [K_S0:pipi -> ^pi+ ^pi-]']
+##ma.toolsDST_ee += ['CustomFloats[z0Err]', 'B0:jpsi_eeks -> [J/psi:ee -> ^e+ ^e-] [K_S0:pipi -> ^pi+ ^pi-]']
+##ma.toolsDST_ee += ['CustomFloats[mcPX]', 'B0:jpsi_eeks -> [J/psi:ee -> ^e+ ^e-] [K_S0:pipi -> ^pi+ ^pi-]']
+##ma.toolsDST_ee += ['CustomFloats[mcPY]', 'B0:jpsi_eeks -> [J/psi:ee -> ^e+ ^e-] [K_S0:pipi -> ^pi+ ^pi-]']
+##ma.toolsDST_ee += ['CustomFloats[mcPZ]', 'B0:jpsi_eeks -> [J/psi:ee -> ^e+ ^e-] [K_S0:pipi -> ^pi+ ^pi-]']
+##ma.toolsDST_ee += ['CustomFloats[px]', 'B0:jpsi_eeks -> [J/psi:ee -> ^e+ ^e-] [K_S0:pipi -> ^pi+ ^pi-]']
+##ma.toolsDST_ee += ['CustomFloats[py]', 'B0:jpsi_eeks -> [J/psi:ee -> ^e+ ^e-] [K_S0:pipi -> ^pi+ ^pi-]']
+##ma.toolsDST_ee += ['CustomFloats[pz]', 'B0:jpsi_eeks -> [J/psi:ee -> ^e+ ^e-] [K_S0:pipi -> ^pi+ ^pi-]']
+##ma.toolsDST_ee += ['CustomFloats[pxErr]', 'B0:jpsi_eeks -> [J/psi:ee -> ^e+ ^e-] [K_S0:pipi -> ^pi+ ^pi-]']
+##ma.toolsDST_ee += ['CustomFloats[pyErr]', 'B0:jpsi_eeks -> [J/psi:ee -> ^e+ ^e-] [K_S0:pipi -> ^pi+ ^pi-]']
+##ma.toolsDST_ee += ['CustomFloats[pzErr]', 'B0:jpsi_eeks -> [J/psi:ee -> ^e+ ^e-] [K_S0:pipi -> ^pi+ ^pi-]']
+##
+##ma.toolsDST_ee += ['CustomFloats[mcDX]', 'B0:jpsi_eeks -> [^J/psi:ee -> ^e+ ^e-] [K_S0:pipi -> ^pi+ ^pi-]']
+##ma.toolsDST_ee += ['CustomFloats[mcDY]', 'B0:jpsi_eeks -> [^J/psi:ee -> ^e+ ^e-] [K_S0:pipi -> ^pi+ ^pi-]']
+##ma.toolsDST_ee += ['CustomFloats[mcDZ]', 'B0:jpsi_eeks -> [^J/psi:ee -> ^e+ ^e-] [K_S0:pipi -> ^pi+ ^pi-]']
+##ma.toolsDST_ee += ['CustomFloats[x]', 'B0:jpsi_eeks -> [^J/psi:ee -> ^e+ ^e-] [K_S0:pipi -> ^pi+ ^pi-]']
+##ma.toolsDST_ee += ['CustomFloats[y]', 'B0:jpsi_eeks -> [^J/psi:ee -> ^e+ ^e-] [K_S0:pipi -> ^pi+ ^pi-]']
+##ma.toolsDST_ee += ['CustomFloats[z]', 'B0:jpsi_eeks -> [^J/psi:ee -> ^e+ ^e-] [K_S0:pipi -> ^pi+ ^pi-]']
+##ma.toolsDST_ee += ['CustomFloats[x_uncertainty]', 'B0:jpsi_eeks -> [^J/psi:ee -> ^e+ ^e-] [K_S0:pipi -> ^pi+ ^pi-]']
+##ma.toolsDST_ee += ['CustomFloats[y_uncertainty]', 'B0:jpsi_eeks -> [^J/psi:ee -> ^e+ ^e-] [K_S0:pipi -> ^pi+ ^pi-]']
+##ma.toolsDST_ee += ['CustomFloats[z_uncertainty]', 'B0:jpsi_eeks -> [^J/psi:ee -> ^e+ ^e-] [K_S0:pipi -> ^pi+ ^pi-]']
+##
+##ma.toolsDST_ee += ['CustomFloats[nPXDHits]', 'B0:jpsi_eeks -> [J/psi:ee -> ^e+ ^e-] [K_S0:pipi -> ^pi+ ^pi-]']
+##ma.toolsDST_ee += ['CustomFloats[nSVDHits]', 'B0:jpsi_eeks -> [J/psi:ee -> ^e+ ^e-] [K_S0:pipi -> ^pi+ ^pi-]']
+##ma.toolsDST_ee += ['CustomFloats[firstPXDLayer]', 'B0:jpsi_eeks -> [J/psi:ee -> ^e+ ^e-] [K_S0:pipi -> ^pi+ ^pi-]']
+##ma.toolsDST_ee += ['CustomFloats[firstSVDLayer]', 'B0:jpsi_eeks -> [J/psi:ee -> ^e+ ^e-] [K_S0:pipi -> ^pi+ ^pi-]']
+##
+##ma.toolsDST_mumu = ['EventMetaData', '^B0:jpsi_mumuks']
+##ma.toolsDST_mumu += ['InvMass[BeforeFit]', 'B0:jpsi_mumuks -> ^J/psi:mumu K_S0:pipi']
+##ma.toolsDST_mumu += ['CMSKinematics', 'B0:jpsi_mumuks -> ^J/psi:mumu ^K_S0:pipi']
+##ma.toolsDST_mumu += ['RecoStats', '^B0:jpsi_mumuks']
+##ma.toolsDST_mumu += ['DeltaEMbc', '^B0:jpsi_mumuks']
+##ma.toolsDST_mumu += ['Vertex', '^B0:jpsi_mumuks']
+##ma.toolsDST_mumu += ['MCVertex', '^B0:jpsi_mumuks']
+##ma.toolsDST_mumu += ['TagVertex', '^B0:jpsi_mumuks']
+##ma.toolsDST_mumu += ['PID', 'B0:jpsi_mumuks -> [J/psi:mumu -> ^mu+ ^mu-] [K_S0:pipi -> ^pi+ ^pi-]']
+##ma.toolsDST_mumu += ['Track', 'B0:jpsi_mumuks -> [J/psi:mumu -> ^mu+ ^mu-] [K_S0:pipi -> ^pi+ ^pi-]']
+##ma.toolsDST_mumu += ['MCTruth', '^B0:jpsi_mumuks']
+##ma.toolsDST_mumu += ['TagVertex', '^B0:jpsi_mumuks']
+##ma.toolsDST_mumu += ['DeltaT', '^B0:jpsi_mumuks']
+##ma.toolsDST_mumu += ['MCTagVertex', '^B0:jpsi_mumuks']
+##ma.toolsDST_mumu += ['MCDeltaT', '^B0:jpsi_mumuks']
+##
+### write out the flat ntuple
+##ma.ntupleFile('B0-KFit-VertexFit_mdst_000001_prod00003520_task00000001.root')
+##ma.ntupleTree('B0tree_e', 'B0:jpsi_eeks', toolsDST_ee)
+##ma.ntupleTree('B0tree_mu', 'B0:jpsi_mumuks', toolsDST_mumu)
+#
+## Process the events
+##process(analysis_main)
 b2.process(mypath)
 
 # print out the summary
