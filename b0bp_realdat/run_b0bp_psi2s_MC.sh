@@ -14,7 +14,7 @@ rname_map=(/home/thczank/b0psi2sks/gsim/B0/psi2see/b0_psi2s_gsim_psi2see_all
 for namap in "${rname_map[@]}";do
        export FILENAME=${namap}'.root'
        export OUTPUT=${namap}'_MC.root'
-       basf2 ./B0_psi2s_yusamod_MC.py -p4 -n 10000
+       basf2 ./B0_psi2s_yusamod_MC.py -p4
 done
 
 
