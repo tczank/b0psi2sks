@@ -141,15 +141,15 @@ ma.matchMCTruth('B+:psi2s_denkp', path=mypath)
 ma.matchMCTruth('B+:psi2s_genkp', path=mypath)
 
 # Fit the B0 Vertex
-vx.vertexRave('B0:psi2s_eeks', 0., 'B0 -> [psi(2S):ee -> [J/psi:ee -> ^e+ ^e-] ^pi+ ^pi-] K_S0:pipi', '', path=mypath)
-vx.vertexRave('B0:psi2s_mumuks', 0., 'B0 -> [psi(2S):mumu -> [J/psi:mumu -> ^mu+ ^mu-] ^pi+ ^pi-] K_S0:pipi', '', path=mypath)
-vx.vertexRave('B0:psi2s_denks', 0., 'B0 -> [psi(2S):den -> ^e+ ^e-] K_S0:pipi', '', path=mypath)
-vx.vertexRave('B0:psi2s_genks', 0., 'B0 -> [psi(2S):gen -> ^mu+ ^mu-] K_S0:pipi','', path=mypath)
+vx.vertexRave('B0:psi2s_eeks', 0., 'B0 -> [psi(2S):ee -> [J/psi:ee -> ^e+ ^e-] ^pi+ ^pi-] K_S0:pipi', 'iptube', path=mypath)
+vx.vertexRave('B0:psi2s_mumuks', 0., 'B0 -> [psi(2S):mumu -> [J/psi:mumu -> ^mu+ ^mu-] ^pi+ ^pi-] K_S0:pipi', 'iptube', path=mypath)
+vx.vertexRave('B0:psi2s_denks', 0., 'B0 -> [psi(2S):den -> ^e+ ^e-] K_S0:pipi', 'iptube', path=mypath)
+vx.vertexRave('B0:psi2s_genks', 0., 'B0 -> [psi(2S):gen -> ^mu+ ^mu-] K_S0:pipi','iptube', path=mypath)
 
-vx.vertexRave('B+:psi2s_eekp', 0., 'B+ -> [psi(2S):ee -> [J/psi:ee -> ^e+ ^e-] ^pi+ ^pi-] K+:good', '', path=mypath)
-vx.vertexRave('B+:psi2s_mumukp', 0., 'B+ -> [psi(2S) -> [J/psi:mumu -> ^mu+ ^mu-] ^pi+ ^pi-] K+:good', '', path=mypath)
-vx.vertexRave('B+:psi2s_denkp', 0., 'B+ -> [psi(2S):den -> ^e+ ^e-]  K+:good', '', path=mypath)
-vx.vertexRave('B+:psi2s_genkp', 0., 'B+ -> [psi(2S):mumu -> ^mu+ ^mu-] K+:good', '', path=mypath)
+vx.vertexRave('B+:psi2s_eekp', 0., 'B+ -> [psi(2S):ee -> [J/psi:ee -> ^e+ ^e-] ^pi+ ^pi-] K+:good', 'iptube', path=mypath)
+vx.vertexRave('B+:psi2s_mumukp', 0., 'B+ -> [psi(2S) -> [J/psi:mumu -> ^mu+ ^mu-] ^pi+ ^pi-] K+:good', 'iptube', path=mypath)
+vx.vertexRave('B+:psi2s_denkp', 0., 'B+ -> [psi(2S):den -> ^e+ ^e-]  K+:good', 'iptube', path=mypath)
+vx.vertexRave('B+:psi2s_genkp', 0., 'B+ -> [psi(2S):mumu -> ^mu+ ^mu-] K+:good', 'iptube', path=mypath)
 
 ma.rankByHighest('B0:psi2s_eeks',   'chiProb',numBest=3, outputVariable='B_vtx_rank', path=mypath)
 ma.rankByHighest('B0:psi2s_mumuks', 'chiProb',numBest=3, outputVariable='B_vtx_rank', path=mypath)
