@@ -91,7 +91,7 @@ ma.TagV("B0:recgen", "breco", 0.001, "standard_PXD",path=mypath)
 #############################################################################
 
 ########################### Saving variables to ntuple ##############################
-rootOutputFile = "LLPpsi2Smumu_morii_test.root"
+rootOutputFile = "LLPpsi2Smumu_morii_test2.root"
 
 ma.variablesToNtuple(decayString="psi(2S):gen",
                   variables=psi2s_vars,
