@@ -9,7 +9,6 @@
 ## new preamble for release 04 ###
 import basf2 as b2
 import modularAnalysis as ma
-import flavorTagger as ft
 import variables.collections as vc
 import variables.utils as vu
 import variables as v
@@ -20,7 +19,7 @@ print(mypath)
 # the flavor tagger weighting file only works from kekcc
 #b2.use_central_database("analysis_tools_release-03-01-00")
 ma.inputMdst(environmentType='default',
-             filename=b2.find_file('/home/thczank/b0psi2sks/gsim/psi2smumu/b0_psi2s_gsim_psi2smumu_all.root'),
+             filename=b2.find_file('/home/thczank/b0psi2sks/gsim/B0/psi2smumu/b0_psi2s_gsim_psi2smumu_all.root'),
              path=mypath)
 
 # create a ROOT file
@@ -36,12 +35,17 @@ ma.fillParticleList('e+:all', cut='electronID > 0.01 and d0 < 2 and abs(z0) < 4'
 ################################################################################
 
 ########## MC TRUTH MATCHING ###############################################
-ma.cutAndCopyList("mu+:gen", "mu+:all", "charge>0",path=mypath)
-ma.cutAndCopyList("mu-:gen", "mu+:all", "charge<0",path=mypath)
+ma.cutAndCopyList("mu+:gen", "mu+:all", "charge>0 and muonID > 0.1",path=mypath)
+ma.cutAndCopyList("mu-:gen", "mu+:all", "charge<0 and muonID > 0.1",path=mypath)
 ma.reconstructDecay(decayString="psi(2S):gen -> mu+:gen mu-:gen",
-                    cut="3.5 < M < 3.8 ",
+                    cut="",
                     path=mypath)
 ma.matchMCTruth(list_name="psi(2S):gen",path=mypath)
+ma.reconstructDecay(decayString="psi(2S):mom -> mu+:gen mu-:gen",
+                    cut="genMotherPDG==443",
+                    path=mypath)
+ma.matchMCTruth(list_name="psi(2S):mom",path=mypath)
+
 
 v.variables.addAlias('mu_EoP','daughter(0,clusterEoP)')
 v.variables.addAlias('psi2smuid','daughter(0,muonID)')
@@ -82,17 +86,22 @@ ma.vertexRave("B0:recgen",-1, "B0:recgen -> [psi(2S):rectru -> ^mu+ ^mu- ]", "ip
 
 ma.matchMCTruth("B0:recgen",path=mypath)
 ma.buildRestOfEvent(target_list_name='B0:recgen',path=mypath)
-ft.flavorTagger( particleLists=['B0:recgen'], weightFiles='B2JpsiKs_muBGx1',path=my_path)
 ma.TagV("B0:recgen", "breco", 0.001, "standard_PXD",path=mypath)
 
 #############################################################################
 
 ########################### Saving variables to ntuple ##############################
-rootOutputFile = "B0psi2Smumu_yusa_test.root"
+rootOutputFile = "LLPpsi2Smumu_morii_test.root"
 
 ma.variablesToNtuple(decayString="psi(2S):gen",
                   variables=psi2s_vars,
                   treename="psi2Smumu_psi2S",
+                  filename=rootOutputFile,
+                  path=mypath)
+
+ma.variablesToNtuple(decayString="psi(2S):mom",
+                  variables=psi2s_vars,
+                  treename="aJpsi",
                   filename=rootOutputFile,
                   path=mypath)
 
