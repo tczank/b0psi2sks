@@ -163,10 +163,10 @@ ma.rankByHighest('B+:psi2s_genkp', 'chiProb',numBest=3, outputVariable='B_vtx_ra
 
 ma.variables.addAlias('B_vtx_rank', 'extraInfo(B_vtx_rank)')
 
-vx.vertexRave('B0:psi2s_eeks', 0., 'B0 -> psi(2S):ee [K_S0:pipi -> ^pi+ ^pi-]', '', path=mypath)
-vx.vertexRave('B0:psi2s_mumuks', 0., 'B0 -> psi(2S):mumu [K_S0:pipi -> ^pi+ ^pi-]', '', path=mypath)
-vx.vertexRave('B0:psi2s_denks', 0., 'B0 -> psi(2S):den  [K_S0:pipi -> ^pi+ ^pi-]', '', path=mypath)
-vx.vertexRave('B0:psi2s_genks', 0., 'B0 -> psi(2S):gen  [K_S0:pipi -> ^pi+ ^pi-]','', path=mypath)
+#vx.vertexRave('B0:psi2s_eeks', 0., 'B0 -> psi(2S):ee [K_S0:pipi -> ^pi+ ^pi-]', '', path=mypath)
+#vx.vertexRave('B0:psi2s_mumuks', 0., 'B0 -> psi(2S):mumu [K_S0:pipi -> ^pi+ ^pi-]', '', path=mypath)
+#vx.vertexRave('B0:psi2s_denks', 0., 'B0 -> psi(2S):den  [K_S0:pipi -> ^pi+ ^pi-]', '', path=mypath)
+#vx.vertexRave('B0:psi2s_genks', 0., 'B0 -> psi(2S):gen  [K_S0:pipi -> ^pi+ ^pi-]','', path=mypath)
 
 ma.rankByHighest('B0:psi2s_eeks',   'daughter(1, chiProb)',numBest=3, outputVariable='B_k_rank', path=mypath)
 ma.rankByHighest('B0:psi2s_mumuks', 'daughter(1, chiProb)',numBest=3, outputVariable='B_k_rank', path=mypath)
