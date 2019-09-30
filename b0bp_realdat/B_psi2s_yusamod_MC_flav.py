@@ -225,30 +225,21 @@ ma.flavorTagger(
     path=mypath)
 
 ma.flavorTagger(
-    particleLists=['B+:psi2s_eeks'],
+    particleLists=['B+:psi2s_eekp'],
     weightFiles='B2JpsiKs_muBGx1',
     path=mypath)
 ma.flavorTagger(
-    particleLists=['B+:psi2s_eeks'],
+    particleLists=['B+:psi2s_mumukp'],
     weightFiles='B2JpsiKs_muBGx1',
     path=mypath)
 ma.flavorTagger(
-    particleLists=['B+:psi2s_eeks'],
+    particleLists=['B+:psi2s_denkp'],
     weightFiles='B2JpsiKs_muBGx1',
     path=mypath)
 ma.flavorTagger(
-    particleLists=['B+:psi2s_eeks'],
+    particleLists=['B+:psi2s_genkp'],
     weightFiles='B2JpsiKs_muBGx1',
     path=mypath)
-
-
-
-
-
-
-
-
-
 
 ## You can apply cuts using the flavor Tagger: qrOutput(FBDT) > -2 rejects all events which do not
 ## provide flavor information using the tag side
@@ -290,6 +281,7 @@ B0e_vars = vc.kinematics + \
            vc.mc_kinematics + \
            vc.mc_vertex + \
            vc.mc_tag_vertex + \
+           vc.flavor_tagging + \
            vu.create_aliases_for_selected(
     list_of_variables=vc.kinematics + cms_kinematics + vc.inv_mass + vc.mc_truth + vc.mc_kinematics,
                decay_string='B0:psi2s_eeks -> ^psi(2S):ee ^K_S0:pipi') + \
@@ -308,6 +300,7 @@ B0den_vars = vc.kinematics + \
            vc.mc_kinematics + \
            vc.mc_vertex + \
            vc.mc_tag_vertex + \
+           vc.flavor_tagging + \
            vu.create_aliases_for_selected(
     list_of_variables=vc.kinematics + cms_kinematics + vc.inv_mass + vc.mc_truth + vc.mc_kinematics,
                decay_string='B0:psi2s_denks -> ^psi(2S):den ^K_S0:pipi') + \
@@ -326,6 +319,7 @@ B0m_vars = vc.kinematics + \
            vc.mc_kinematics + \
            vc.mc_vertex + \
            vc.mc_tag_vertex + \
+           vc.flavor_tagging + \
            vu.create_aliases_for_selected(
     list_of_variables=vc.kinematics  + cms_kinematics + vc.inv_mass + vc.mc_truth + vc.mc_kinematics,
                decay_string='B0:psi2s_mumuks -> ^psi(2S):mumu ^K_S0:pipi') + \
@@ -344,6 +338,7 @@ B0gen_vars = vc.kinematics + \
            vc.mc_kinematics + \
            vc.mc_vertex + \
            vc.mc_tag_vertex + \
+           vc.flavor_tagging + \
            vu.create_aliases_for_selected(
     list_of_variables=vc.kinematics  + cms_kinematics + vc.inv_mass + vc.mc_truth + vc.mc_kinematics,
                decay_string='B0:psi2s_genks -> ^psi(2S):gen ^K_S0:pipi') + \
@@ -362,6 +357,7 @@ Bpe_vars = vc.kinematics + \
            vc.mc_kinematics + \
            vc.mc_vertex + \
            vc.mc_tag_vertex + \
+           vc.flavor_tagging + \
            vu.create_aliases_for_selected(
     list_of_variables=vc.kinematics + cms_kinematics + vc.inv_mass + vc.mc_truth + vc.mc_kinematics,
                decay_string='B+:psi2s_eekp -> ^psi(2S):ee ^K+:good') + \
@@ -380,6 +376,7 @@ Bpden_vars = vc.kinematics + \
            vc.mc_kinematics + \
            vc.mc_vertex + \
            vc.mc_tag_vertex + \
+           vc.flavor_tagging + \
            vu.create_aliases_for_selected(
     list_of_variables=vc.kinematics + cms_kinematics + vc.inv_mass + vc.mc_truth + vc.mc_kinematics,
                decay_string='B+:psi2s_denkp -> ^psi(2S):den ^K+:good') + \
@@ -398,6 +395,7 @@ Bpm_vars = vc.kinematics + \
            vc.mc_kinematics + \
            vc.mc_vertex + \
            vc.mc_tag_vertex + \
+           vc.flavor_tagging + \
     vu.create_aliases_for_selected(
     list_of_variables=vc.kinematics + cms_kinematics + vc.inv_mass + vc.mc_truth + vc.mc_kinematics,
         decay_string='B+:psi2s_mumukp -> ^psi(2S):mumu ^K+:good') + \
@@ -416,7 +414,8 @@ Bpgen_vars = vc.kinematics + \
            vc.mc_kinematics + \
            vc.mc_vertex + \
            vc.mc_tag_vertex + \
-    vu.create_aliases_for_selected(
+           vc.flavor_tagging + \
+           vu.create_aliases_for_selected(
     list_of_variables=vc.kinematics + cms_kinematics + vc.inv_mass + vc.mc_truth + vc.mc_kinematics,
         decay_string='B+:psi2s_genkp -> ^psi(2S):gen ^K+:good') + \
     vu.create_aliases_for_selected(
