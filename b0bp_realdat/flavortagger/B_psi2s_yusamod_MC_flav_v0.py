@@ -197,7 +197,8 @@ ma.buildRestOfEvent(target_list_name='B+:psi2s_genkp', path=mypath)
 
 ft.flavorTagger(
     particleLists=['B0:psi2s_eeks', 'B0:psi2s_mumuks', 'B0:psi2s_denks', 'B0:psi2s_genks', 'B+:psi2s_eekp', 'B+:psi2s_mumukp', 'B+:psi2s_denkp', 'B+:psi2s_genkp'],
-    weightFiles='B2nunubarBGx1')
+    weightFiles='B2nunubarBGx1',
+    path=mypath)
 
 #ft.flavorTagger(
 #    particleLists=['B0:psi2s_mumuks'],
@@ -257,8 +258,7 @@ cms_kinematics = create_aliases(kinematics, "useCMSFrame({variable})","CMS")
 my_cluster = ['clusterE', 'clusterEoP', 'clusterTheta', 'nMatchedKLMClusters', 'klmClusterLayers']
 #rank = ['chiProb','jpsi_rank','ks_rank','k_rank']
 rank = ['chiProb','B_vtx_rank','B_k_rank']
-#b0mcflavor = ['mcFlavorOfOtherB0']
-
+flavor_extra = ['B0mcErrors', 'qrCombined']
 
 B0e_vars = vc.kinematics + \
            cms_kinematics +\
@@ -272,6 +272,7 @@ B0e_vars = vc.kinematics + \
            vc.mc_vertex + \
            vc.mc_tag_vertex + \
            ft.flavor_tagging + \
+           flavor_extra + \
            vu.create_aliases_for_selected(
     list_of_variables=vc.kinematics + cms_kinematics + vc.inv_mass + vc.mc_truth + vc.mc_kinematics,
                decay_string='B0:psi2s_eeks -> ^psi(2S):ee ^K_S0:pipi') + \
@@ -291,6 +292,7 @@ B0den_vars = vc.kinematics + \
            vc.mc_vertex + \
            vc.mc_tag_vertex + \
            ft.flavor_tagging + \
+           flavor_extra + \
            vu.create_aliases_for_selected(
     list_of_variables=vc.kinematics + cms_kinematics + vc.inv_mass + vc.mc_truth + vc.mc_kinematics,
                decay_string='B0:psi2s_denks -> ^psi(2S):den ^K_S0:pipi') + \
@@ -310,6 +312,7 @@ B0m_vars = vc.kinematics + \
            vc.mc_vertex + \
            vc.mc_tag_vertex + \
            ft.flavor_tagging + \
+           flavor_extra + \
            vu.create_aliases_for_selected(
     list_of_variables=vc.kinematics  + cms_kinematics + vc.inv_mass + vc.mc_truth + vc.mc_kinematics,
                decay_string='B0:psi2s_mumuks -> ^psi(2S):mumu ^K_S0:pipi') + \
@@ -329,6 +332,7 @@ B0gen_vars = vc.kinematics + \
            vc.mc_vertex + \
            vc.mc_tag_vertex + \
            ft.flavor_tagging + \
+           flavor_extra + \
            vu.create_aliases_for_selected(
     list_of_variables=vc.kinematics  + cms_kinematics + vc.inv_mass + vc.mc_truth + vc.mc_kinematics,
                decay_string='B0:psi2s_genks -> ^psi(2S):gen ^K_S0:pipi') + \
@@ -347,7 +351,8 @@ Bpe_vars = vc.kinematics + \
            vc.mc_kinematics + \
            vc.mc_vertex + \
            vc.mc_tag_vertex + \
-	   ft.flavor_tagging +\
+	       ft.flavor_tagging +\
+           flavor_extra + \
            vu.create_aliases_for_selected(
     list_of_variables=vc.kinematics + cms_kinematics + vc.inv_mass + vc.mc_truth + vc.mc_kinematics,
                decay_string='B+:psi2s_eekp -> ^psi(2S):ee ^K+:good') + \
@@ -366,7 +371,8 @@ Bpden_vars = vc.kinematics + \
            vc.mc_kinematics + \
            vc.mc_vertex + \
            vc.mc_tag_vertex + \
-	   ft.flavor_tagging + \
+	       ft.flavor_tagging + \
+           flavor_extra + \
            vu.create_aliases_for_selected(
     list_of_variables=vc.kinematics + cms_kinematics + vc.inv_mass + vc.mc_truth + vc.mc_kinematics,
                decay_string='B+:psi2s_denkp -> ^psi(2S):den ^K+:good') + \
@@ -385,7 +391,8 @@ Bpm_vars = vc.kinematics + \
            vc.mc_kinematics + \
            vc.mc_vertex + \
            vc.mc_tag_vertex + \
-	   ft.flavor_tagging + \
+	       ft.flavor_tagging + \
+           flavor_extra + \
     vu.create_aliases_for_selected(
     list_of_variables=vc.kinematics + cms_kinematics + vc.inv_mass + vc.mc_truth + vc.mc_kinematics,
         decay_string='B+:psi2s_mumukp -> ^psi(2S):mumu ^K+:good') + \
@@ -404,7 +411,8 @@ Bpgen_vars = vc.kinematics + \
            vc.mc_kinematics + \
            vc.mc_vertex + \
            vc.mc_tag_vertex + \
-	   ft.flavor_tagging + \
+	       ft.flavor_tagging + \
+           flavor_extra + \
            vu.create_aliases_for_selected(
     list_of_variables=vc.kinematics + cms_kinematics + vc.inv_mass + vc.mc_truth + vc.mc_kinematics,
         decay_string='B+:psi2s_genkp -> ^psi(2S):gen ^K+:good') + \
